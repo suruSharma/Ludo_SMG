@@ -7,10 +7,17 @@ interface IState {
   board: Board;
   delta: BoardDelta;
 }
-
+//board consists of 15 rows and columns; each player has 4 pawns to move
 module gameLogic {
-  export const ROWS = 3;
-  export const COLS = 3;
+  export const ROWS = 15;
+  export const COLS = 15;
+  var playerCount={
+        'R' : 4,
+        'B' : 4,
+        'G' : 4,
+        'Y' : 4
+  
+};
 
   /** Returns the initial TicTacToe board, which is a ROWSxCOLS matrix containing ''. */
   function getInitialBoard(): Board {
@@ -145,7 +152,7 @@ module gameLogic {
       turnIndexBeforeMove: 0,
       stateBeforeMove: null,
       move: move,
-      numberOfPlayers: 2};
+      numberOfPlayers: 4};
     gameLogic.checkMoveOk(params);
   }
 }
