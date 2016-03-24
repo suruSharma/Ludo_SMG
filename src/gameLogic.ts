@@ -148,7 +148,9 @@ module gameLogic {
     }
     
     
-    return board;
+    
+  }
+  return board;
   }
 
   export function getInitialState(): IState {
