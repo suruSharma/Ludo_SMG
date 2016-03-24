@@ -25,9 +25,129 @@ module gameLogic {
     for (let i = 0; i < ROWS; i++) {
       board[i] = [];
       for (let j = 0; j < COLS; j++) {
-        board[i][j] = '';
+        if( i == 0){
+            if( j == 6 || j == 7 || j == 8){
+                board[i][j] = '';
+            }else{
+                board[i][j] = 'X';
+            }
+        }
+        if( i == 1){
+            if(j == 6){
+                board[i][j] = '';
+            }else if(j == 7){
+                board[i][j] = '4';
+            }else if(j == 8){
+                board[i][j] = 'S';
+            }else{
+                board[i][j] = 'X';
+            }
+        }
+        
+        if( i == 2){
+            if(j == 6){
+                board[i][j] = 'S';
+            }else if(j == 7){
+                board[i][j] = '4';
+            }else if(j == 8){
+                board[i][j] = '';
+            }
+      }
+      
+      if( i == 3 || i == 4 || i == 5){
+          if(j == 6 || j == 8){
+                board[i][j] = '';
+            }else if(j == 7){
+                board[i][j] = '4';
+            }else{
+                board[i][j] = 'X';
+            }
+      }
+      
+      if( i == 6){
+          if( j == 1 || j== 12){
+              board[i][j] = 'S';
+          }else if( j == 6 || j == 8){
+              board[i][j] = 'X';
+          }else if(j == 7){
+              board[i][j] = '4H';
+          }else{
+              board[i][j] = '';
+          }
+      }
+      
+      if(i == 7){
+          if(j == 1 ||  j == 2 || j ==3 || j == 4 || j ==5 ){
+              board[i][j] = '1';
+          }else if(j == 6){
+              board[i][j] = '1H';
+          }else if(j == 7){
+              board[i][j] = 'X';
+          }else if(j == 8){
+              board[i][j] = '3H';
+          }else if( j == 9 || j == 10 || j == 11 || j == 12 || j ==13){
+              board[i][j] = '3';
+          }else {
+              board[i][j] = '';
+          }
+      }
+      
+      if( i == 8){
+          if( j == 2 || j ==13){
+              board[i][j] = 'S';
+          }else if(j == 6 || j == 8){
+              board[i][j] = 'X';
+          }else if(j == 7){
+              board[i][j] = '2H';
+          }else{
+              board[i][j] = ''
+          }
+      }
+      
+      if( i == 9 || i == 10 || i == 11){
+          if(j == 6 || j == 8){
+                board[i][j] = '';
+            }else if(j == 7){
+                board[i][j] = '2';
+            }else{
+                board[i][j] = 'X';
+            }
+      }
+      
+      if( i == 12){
+          if(j == 6){
+                board[i][j] = '';
+            }else if(j == 7){
+                board[i][j] = '2';
+            }else if(j == 8){
+                board[i][j] = 'S';
+            }else{
+                board[i][j] = 'X';
+            }
+      }
+      
+      if(i == 13){
+          if(j == 6){
+                board[i][j] = 'S';
+            }else if(j == 7){
+                board[i][j] = '2';
+            }else if(j == 8){
+                board[i][j] = '';
+            }else{
+                board[i][j] = 'X';
+            }
+      }
+      
+      if( i == 14){
+          if(j == 6 || j ==7 || j == 8){
+                board[i][j] = '';
+            }else{
+                board[i][j] = 'X';
+            }
       }
     }
+    
+    
     return board;
   }
 
