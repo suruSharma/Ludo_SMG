@@ -1,4 +1,4 @@
-TicTacToe
+Ludo
 =========
 
-TicTacToe game
+Ludo game
