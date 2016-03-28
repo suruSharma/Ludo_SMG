@@ -1,4 +1,14 @@
 type Board = string[][];
+
+interface Player{
+    name: string;
+    pos1: string;
+    pos2: string;
+    pos3: string;
+    pos4: string;
+    pawnsOnBoard: number;
+}
+
 interface BoardDelta {
   row: number;
   col: number;
@@ -43,16 +53,20 @@ module gameLogic {
    *      ['O', 'X', 'X']]
    */
   function isTie(board: Board): boolean {
-    for (let i = 0; i < ROWS; i++) {
-      for (let j = 0; j < COLS; j++) {
-        if (board[i][j] === '') {
-          // If there is an empty cell then we do not have a tie.
-          return false;
-        }
-      }
-    }
-    // No empty cells, so we have a tie!
-    return true;
+    // for (let i = 0; i < ROWS; i++) {
+    //   for (let j = 0; j < COLS; j++) {
+    //     if (board[i][j] === '') {
+    //       // If there is an empty cell then we do not have a tie.
+    //       return false;
+    //     }
+    //   }
+    // }
+    // // No empty cells, so we have a tie!
+    // return true;
+   
+   // We never have a tie on out board
+    
+    return false;
   }
 
   /**
@@ -63,35 +77,43 @@ module gameLogic {
    *      ['X', 'O', ''],
    *      ['X', '', '']]
    */
-  function getWinner(board: Board): string {
-    let boardString = '';
-    for (let i = 0; i < ROWS; i++) {
-      for (let j = 0; j < COLS; j++) {
-        let cell = board[i][j];
-        boardString += cell === '' ? ' ' : cell;
-      }
+  function getWinner(player: Player): boolean {
+    
+    let countOnBoard = player.pawnsOnBoard;
+    if(countOnBoard == 0)
+    {
+        return true;
     }
-    let win_patterns = [
-      'XXX......',
-      '...XXX...',
-      '......XXX',
-      'X..X..X..',
-      '.X..X..X.',
-      '..X..X..X',
-      'X...X...X',
-      '..X.X.X..'
-    ];
-    for (let win_pattern of win_patterns) {
-      let x_regexp = new RegExp(win_pattern);
-      let o_regexp = new RegExp(win_pattern.replace(/X/g, 'O'));
-      if (x_regexp.test(boardString)) {
-        return 'X';
-      }
-      if (o_regexp.test(boardString)) {
-        return 'O';
-      }
-    }
-    return '';
+      
+      return false;
+    // let boardString = '';
+    // for (let i = 0; i < ROWS; i++) {
+    //   for (let j = 0; j < COLS; j++) {
+    //     let cell = board[i][j];
+    //     boardString += cell === '' ? ' ' : cell;
+    //   }
+    // }
+    // let win_patterns = [
+    //   'XXX......',
+    //   '...XXX...',
+    //   '......XXX',
+    //   'X..X..X..',
+    //   '.X..X..X.',
+    //   '..X..X..X',
+    //   'X...X...X',
+    //   '..X.X.X..'
+    // ];
+    // for (let win_pattern of win_patterns) {
+    //   let x_regexp = new RegExp(win_pattern);
+    //   let o_regexp = new RegExp(win_pattern.replace(/X/g, 'O'));
+    //   if (x_regexp.test(boardString)) {
+    //     return 'X';
+    //   }
+    //   if (o_regexp.test(boardString)) {
+    //     return 'O';
+    //   }
+    // }
+   
   }
 
   /**
