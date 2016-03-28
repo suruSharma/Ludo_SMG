@@ -13,7 +13,7 @@ var game;
     function init() {
         translate.setTranslations(getTranslations());
         translate.setLanguage('en');
-        log.log("Translation of 'RULES_OF_TICTACTOE' is " + translate('RULES_OF_TICTACTOE'));
+        log.log("Translation of 'RULES_OF_LUDO' is " + translate('RULES_OF_LUDO'));
         resizeGameAreaService.setWidthToHeight(1);
         moveService.setGame({
             minNumberOfPlayers: 2,
@@ -37,7 +37,7 @@ var game;
     game.init = init;
     function getTranslations() {
         return {
-            RULES_OF_TICTACTOE: {
+            RULES_OF_LUDO: {
                 en: "Rules of Ludo",
                 iw: "חוקי המשחק",
             },
