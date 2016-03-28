@@ -33,7 +33,7 @@ module gameLogic {
   function getInitialBoard(): Board {
     let board: Board = [];
     for (let i = 0; i < ROWS; i++) {
-      board[i] = [];
+      board[i] = [];    
       for (let j = 0; j < COLS; j++) {
         board[i][j] = '';
       }
