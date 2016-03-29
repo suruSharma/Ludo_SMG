@@ -1,11 +1,12 @@
 type Board = string[][];
-
+//positions are of type board delta, i.e the last changed positions of all the pawns of that player
+//whe we define the player the name will be the color and the and the pos will be the initial positions
 interface Player{
     name: string;
-    pos1: string;
-    pos2: string;
-    pos3: string;
-    pos4: string;
+    pos1: BoardDelta;
+    pos2: BoardDelta;
+    pos3: BoardDelta;
+    pos4: BoardDelta;
     pawnsOnBoard: number;
 }
 
@@ -13,9 +14,11 @@ interface BoardDelta {
   row: number;
   col: number;
 }
+//instead of BoardDelta as per used in tictactoe, we will provide player info
 interface IState {
   board: Board;
-  delta: BoardDelta;
+  //delta: BoardDelta;
+  player: Player;
 }
 //board consists of 15 rows and columns; each player has 4 pawns to move
 module gameLogic {
