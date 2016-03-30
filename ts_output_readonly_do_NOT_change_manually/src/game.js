@@ -42,12 +42,12 @@ var game;
                 iw: "חוקי המשחק",
             },
             RULES_SLIDE1: {
-                en: "You and your opponent take turns to mark the grid in an empty spot. The first mark is X, then O, then X, then O, etc.",
-                iw: "אתה והיריב מסמנים איקס או עיגול כל תור",
+                en: "TODO : Update these rules",
+                iw: "",
             },
             RULES_SLIDE2: {
-                en: "The first to mark a whole row, column or diagonal wins.",
-                iw: "הראשון שמסמן שורה, עמודה או אלכסון מנצח",
+                en: "TODO : Update these rules",
+                iw: "",
             },
             CLOSE: {
                 en: "Close",

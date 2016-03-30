@@ -8,6 +8,7 @@ interface Player{
     pos3: BoardDelta;
     pos4: BoardDelta;
     pawnsOnBoard: number;
+    id : string
 }
 
 interface BoardDelta {
@@ -171,74 +172,22 @@ module gameLogic {
   }
 
   /**
-   * Returns true if the game ended in a tie because there are no empty cells.
-   * E.g., isTie returns true for the following board:
-   *     [['X', 'O', 'X'],
-   *      ['X', 'O', 'O'],
-   *      ['O', 'X', 'X']]
+   * This method will always return false because a tie is not possible in the game of ludo
    */
   function isTie(board: Board): boolean {
-    // for (let i = 0; i < ROWS; i++) {
-    //   for (let j = 0; j < COLS; j++) {
-    //     if (board[i][j] === '') {
-    //       // If there is an empty cell then we do not have a tie.
-    //       return false;
-    //     }
-    //   }
-    // }
-    // // No empty cells, so we have a tie!
-    // return true;
-   
-   // We never have a tie on out board
-    
     return false;
   }
 
   /**
-   * Return the winner (either 'X' or 'O') or '' if there is no winner.
-   * The board is a matrix of size 3x3 containing either 'X', 'O', or ''.
-   * E.g., getWinner returns 'X' for the following board:
-   *     [['X', 'O', ''],
-   *      ['X', 'O', ''],
-   *      ['X', '', '']]
+   * Return the id of the player if the player does not have any pawns on the board. Else return an empty string
    */
-  function getWinner(player: Player): boolean {
-    
+  function getWinner(player: Player): string {
     let countOnBoard = player.pawnsOnBoard;
     if(countOnBoard == 0)
     {
-        return true;
+        return player.id;
     }
-      
-      return false;
-    // let boardString = '';
-    // for (let i = 0; i < ROWS; i++) {
-    //   for (let j = 0; j < COLS; j++) {
-    //     let cell = board[i][j];
-    //     boardString += cell === '' ? ' ' : cell;
-    //   }
-    // }
-    // let win_patterns = [
-    //   'XXX......',
-    //   '...XXX...',
-    //   '......XXX',
-    //   'X..X..X..',
-    //   '.X..X..X.',
-    //   '..X..X..X',
-    //   'X...X...X',
-    //   '..X.X.X..'
-    // ];
-    // for (let win_pattern of win_patterns) {
-    //   let x_regexp = new RegExp(win_pattern);
-    //   let o_regexp = new RegExp(win_pattern.replace(/X/g, 'O'));
-    //   if (x_regexp.test(boardString)) {
-    //     return 'X';
-    //   }
-    //   if (o_regexp.test(boardString)) {
-    //     return 'O';
-    //   }
-    // }
-   
+      return '';
   }
 
   /**
