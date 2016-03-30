@@ -192,6 +192,22 @@ module game {
     return state.board[row][col] === 'S';
   }
   
+  export function isPieceRedPlayer(row: number, col: number): boolean {
+    return state.board[row][col] === 'RP';
+  }
+  
+  export function isPieceGreenPlayer(row: number, col: number): boolean {
+    return state.board[row][col] === 'GP';
+  }
+  
+  export function isPieceBluePlayer(row: number, col: number): boolean {
+    return state.board[row][col] === 'BP';
+  }
+  
+  export function isPieceYellowPlayer(row: number, col: number): boolean {
+    return state.board[row][col] === 'YP';
+  }
+  
   
 
   export function shouldSlowlyAppear(row: number, col: number): boolean {

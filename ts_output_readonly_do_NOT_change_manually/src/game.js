@@ -181,6 +181,22 @@ var game;
         return game.state.board[row][col] === 'S';
     }
     game.isPiecePlainStar = isPiecePlainStar;
+    function isPieceRedPlayer(row, col) {
+        return game.state.board[row][col] === 'RP';
+    }
+    game.isPieceRedPlayer = isPieceRedPlayer;
+    function isPieceGreenPlayer(row, col) {
+        return game.state.board[row][col] === 'GP';
+    }
+    game.isPieceGreenPlayer = isPieceGreenPlayer;
+    function isPieceBluePlayer(row, col) {
+        return game.state.board[row][col] === 'BP';
+    }
+    game.isPieceBluePlayer = isPieceBluePlayer;
+    function isPieceYellowPlayer(row, col) {
+        return game.state.board[row][col] === 'YP';
+    }
+    game.isPieceYellowPlayer = isPieceYellowPlayer;
     function shouldSlowlyAppear(row, col) {
         return !game.animationEnded &&
             game.state.delta &&
