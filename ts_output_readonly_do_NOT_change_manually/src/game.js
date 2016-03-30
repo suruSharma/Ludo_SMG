@@ -120,14 +120,67 @@ var game;
         return cell !== "";
     }
     game.shouldShowImage = shouldShowImage;
-    function isPieceX(row, col) {
+    //Move Allowed
+    function isPieceInAccessible(row, col) {
         return game.state.board[row][col] === 'X';
     }
-    game.isPieceX = isPieceX;
-    function isPieceO(row, col) {
-        return game.state.board[row][col] === 'O';
+    game.isPieceInAccessible = isPieceInAccessible;
+    //Color of homes
+    function isPieceRedHome(row, col) {
+        return game.state.board[row][col] === 'RH';
     }
-    game.isPieceO = isPieceO;
+    game.isPieceRedHome = isPieceRedHome;
+    function isPieceGreenHome(row, col) {
+        return game.state.board[row][col] === 'GH';
+    }
+    game.isPieceGreenHome = isPieceGreenHome;
+    function isPieceBlueHome(row, col) {
+        return game.state.board[row][col] === 'BH';
+    }
+    game.isPieceBlueHome = isPieceBlueHome;
+    function isPieceYellowHome(row, col) {
+        return game.state.board[row][col] === 'YH';
+    }
+    game.isPieceYellowHome = isPieceYellowHome;
+    //Color of stars
+    function isPieceRedStar(row, col) {
+        return game.state.board[row][col] === 'RS';
+    }
+    game.isPieceRedStar = isPieceRedStar;
+    function isPieceGreenStar(row, col) {
+        return game.state.board[row][col] === 'GS';
+    }
+    game.isPieceGreenStar = isPieceGreenStar;
+    function isPieceBlueStar(row, col) {
+        return game.state.board[row][col] === 'BS';
+    }
+    game.isPieceBlueStar = isPieceBlueStar;
+    function isPieceYellowStar(row, col) {
+        return game.state.board[row][col] === 'YS';
+    }
+    game.isPieceYellowStar = isPieceYellowStar;
+    //Color of lane
+    function isPieceRedLane(row, col) {
+        return game.state.board[row][col] === 'RL';
+    }
+    game.isPieceRedLane = isPieceRedLane;
+    function isPieceGreenLane(row, col) {
+        return game.state.board[row][col] === 'GL';
+    }
+    game.isPieceGreenLane = isPieceGreenLane;
+    function isPieceBlueLane(row, col) {
+        return game.state.board[row][col] === 'BL';
+    }
+    game.isPieceBlueLane = isPieceBlueLane;
+    function isPieceYellowLane(row, col) {
+        return game.state.board[row][col] === 'YL';
+    }
+    game.isPieceYellowLane = isPieceYellowLane;
+    //Plain star
+    function isPlainStar(row, col) {
+        return game.state.board[row][col] === 'S';
+    }
+    game.isPlainStar = isPlainStar;
     function shouldSlowlyAppear(row, col) {
         return !game.animationEnded &&
             game.state.delta &&

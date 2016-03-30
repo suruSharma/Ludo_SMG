@@ -6,7 +6,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <title>Ludo</title>
-  <meta name="description" content="<Ludo game">
+  <meta name="description" content="Ludo game">
   <link rel="shortcut icon"type="image/x-icon" href="data:image/x-icon;,"><!-- Suppress browser request for favicon.ico -->
 
   <!-- To ensure CSS files are downloaded in parallel, always include external CSS before external JavaScript. -->
@@ -21,12 +21,12 @@
 
   <!-- The crossorigin attribute controls, for scripts that are obtained from other origins, whether error information will be exposed. -->
   <!-- build:[src] http://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js -->
-  <script crossorigin="anonymous" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.js"></script>
+  <script crossorigin="anonymous" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.js"></script>
   <!-- /build -->
 
   <!-- For the game rules/instructions, I use carousel from Angular UI + Bootstrap -->
   <!-- build:[src] http://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-touch.min.js -->
-  <script crossorigin="anonymous" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-touch.js"></script>
+  <script crossorigin="anonymous" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-touch.js"></script>
   <!-- /build -->
   <!-- build:[src] http://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.12.1/ui-bootstrap-tpls.min.js -->
   <script crossorigin="anonymous" src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.12.1/ui-bootstrap-tpls.js"></script>
@@ -39,7 +39,6 @@
   <!-- build:js js/everything.min.js -->
   <script src="ts_output_readonly_do_NOT_change_manually/src/gameLogic.js"></script>
   <script src="ts_output_readonly_do_NOT_change_manually/src/game.js"></script>
-  <script src="ts_output_readonly_do_NOT_change_manually/src/aiService.js"></script>
   <!-- /build -->
 
   <!-- build:remove -->
@@ -98,38 +97,72 @@
   </div>
 
 <div id="gameArea">
-
-  <div ng-repeat="row in [0, 1, 2]"
-      style="position:absolute; top:{{row * 33}}%; left:0; width:100%; height:33%;">
-    <div ng-repeat="col in [0, 1, 2]"
-        style="position:absolute; top:0; left:{{col * 33}}%; width:33%; height:100%;"
-        ng-class="{r: col < 2, b: row < 2}"
-        ng-click="game.cellClicked(row, col)"
-        id="{{'e2e_test_div_' + row + 'x' + col}}">
+  <div ng-repeat="row in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]" 
+    style="position:absolute; top:{{row * 6}}%; left:0; width:100%; height:6%;">
+    <div ng-repeat="col in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]"
+      style="position:absolute; top:0; left:{{col * 6}}%; width:6%; height:100%;"
+      ng-class="{t: row < 1, l : col < 1}"
+      class="b r"
+      ng-click="game.cellClicked(row, col)">
       <div style="width:100%; height: 100%"
           ng-class="{slowlyAppear: game.shouldSlowlyAppear(row, col)}"
           ng-if="game.shouldShowImage(row, col)">
-        <svg ng-if="game.isPieceO(row, col)"
+        <svg ng-if="game.isPieceInAccessible(row, col)"
             id="{{'e2e_test_pieceO_' + row + 'x' + col}}"
             width="100%" height="100%">
-          <circle cx="50%" cy="50%" r="27%"
-            stroke="blue" stroke-width="5%" fill="white" />
+          <rect width="100" height="100" style="fill:black;stroke-width:3;stroke:black" />
         </svg>
-        <svg ng-if="game.isPieceX(row, col)"
+        <svg ng-if="game.isPieceRedLane(row, col) || game.isPieceRedHome(row, col)"
             id="{{'e2e_test_pieceX_' + row + 'x' + col}}"
             width="100%" height="100%">
-          <line x1="25%" y1="25%"
-                x2="75%" y2="75%"
-                stroke="red"
-                stroke-width="5%"/>
-          <line x1="25%" y1="75%"
-                x2="75%" y2="25%"
-                stroke="red"
-                stroke-width="5%"/>
+          <rect width="100" height="100" style="fill:red;stroke-width:3;stroke:red" />
+        </svg>
+        
+        <svg ng-if="game.isPieceGreenLane(row, col) || game.isPieceGreenHome(row, col)"
+            id="{{'e2e_test_pieceX_' + row + 'x' + col}}"
+            width="100%" height="100%">
+          <rect width="100" height="100" style="fill:green;stroke-width:3;stroke:green" />
+        </svg>
+        
+        <svg ng-if="game.isPieceYellowLane(row, col) || game.isPieceYellowHome(row, col)"
+            id="{{'e2e_test_pieceX_' + row + 'x' + col}}"
+            width="100%" height="100%">
+          <rect width="100" height="100" style="fill:yellow;stroke-width:3;stroke:yellow" />
+        </svg>
+        
+        <svg ng-if="game.isPieceBlueLane(row, col) || game.isPieceBlueHome(row, col)"
+            id="{{'e2e_test_pieceX_' + row + 'x' + col}}"
+            width="100%" height="100%">
+          <rect width="100" height="100" style="fill:blue;stroke-width:3;stroke:blue" />
+        </svg>
+        
+        <svg ng-if="game.isPieceRedStar(row, col)"
+            id="{{'e2e_test_pieceX_' + row + 'x' + col}}"
+            width="100%" height="100%">
+          <polygon points="250,170, 190,330 ,340,210 ,160,210 ,310,330" style="fill:lime;stroke:purple;stroke-width:2;"/>
+        </svg>
+        
+        <svg ng-if="game.isPieceGreenStar(row, col)"
+            id="{{'e2e_test_pieceX_' + row + 'x' + col}}"
+            width="100%" height="100%">
+          <polygon points="100,10 40,198 190,78 10,78 160,198" style="fill:green;stroke:gold;stroke-width:5;fill-rule:nonzero;"/>
+        </svg>
+        
+        <svg ng-if="game.isPieceYellowStar(row, col)"
+            id="{{'e2e_test_pieceX_' + row + 'x' + col}}"
+            width="100%" height="100%">
+          <polygon points="100,10 40,198 190,78 10,78 160,198" style="fill:yellow;stroke:gold;stroke-width:5;fill-rule:nonzero;"/>
+        </svg>
+        
+        <svg ng-if="game.isPieceBlueStar(row, col)"
+            id="{{'e2e_test_pieceX_' + row + 'x' + col}}"
+            width="100%" height="100%">
+          <polygon points="100,10 40,198 190,78 10,78 160,198" style="fill:blue;stroke:gold;stroke-width:5;fill-rule:nonzero;"/>
         </svg>
       </div>
     </div>
   </div>
+  
 </div>
 
 </body>

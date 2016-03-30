@@ -131,13 +131,68 @@ module game {
     return cell !== "";
   }
 
-  export function isPieceX(row: number, col: number): boolean {
+  //Move Allowed
+  export function isPieceInAccessible(row: number, col: number): boolean {
     return state.board[row][col] === 'X';
   }
-
-  export function isPieceO(row: number, col: number): boolean {
-    return state.board[row][col] === 'O';
+  
+  //Color of homes
+  export function isPieceRedHome(row: number, col: number): boolean {
+    return state.board[row][col] === 'RH';
   }
+
+  export function isPieceGreenHome(row: number, col: number): boolean {
+    return state.board[row][col] === 'GH';
+  }
+  
+  export function isPieceBlueHome(row: number, col: number): boolean {
+    return state.board[row][col] === 'BH';
+  }
+  
+  export function isPieceYellowHome(row: number, col: number): boolean {
+    return state.board[row][col] === 'YH';
+  }
+  
+  //Color of stars
+  export function isPieceRedStar(row: number, col: number): boolean {
+    return state.board[row][col] === 'RS';
+  }
+  
+  export function isPieceGreenStar(row: number, col: number): boolean {
+    return state.board[row][col] === 'GS';
+  }
+  
+  export function isPieceBlueStar(row: number, col: number): boolean {
+    return state.board[row][col] === 'BS';
+  }
+  
+  export function isPieceYellowStar(row: number, col: number): boolean {
+    return state.board[row][col] === 'YS';
+  }
+  
+  //Color of lane
+  export function isPieceRedLane(row: number, col: number): boolean {
+    return state.board[row][col] === 'RL';
+  }
+  
+  export function isPieceGreenLane(row: number, col: number): boolean {
+    return state.board[row][col] === 'GL';
+  }
+  
+  export function isPieceBlueLane(row: number, col: number): boolean {
+    return state.board[row][col] === 'BL';
+  }
+  
+  export function isPieceYellowLane(row: number, col: number): boolean {
+    return state.board[row][col] === 'YL';
+  }
+  
+  //Plain star
+  export function isPlainStar(row: number, col: number): boolean {
+    return state.board[row][col] === 'S';
+  }
+  
+  
 
   export function shouldSlowlyAppear(row: number, col: number): boolean {
     return !animationEnded &&

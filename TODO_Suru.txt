@@ -1,3 +1,0 @@
-Update files in the img folder
-
-Update text for rules in game.ts
