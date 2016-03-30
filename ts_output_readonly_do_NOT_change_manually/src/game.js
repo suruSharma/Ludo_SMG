@@ -177,10 +177,10 @@ var game;
     }
     game.isPieceYellowLane = isPieceYellowLane;
     //Plain star
-    function isPlainStar(row, col) {
+    function isPiecePlainStar(row, col) {
         return game.state.board[row][col] === 'S';
     }
-    game.isPlainStar = isPlainStar;
+    game.isPiecePlainStar = isPiecePlainStar;
     function shouldSlowlyAppear(row, col) {
         return !game.animationEnded &&
             game.state.delta &&

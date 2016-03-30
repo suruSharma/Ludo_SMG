@@ -188,7 +188,7 @@ module game {
   }
   
   //Plain star
-  export function isPlainStar(row: number, col: number): boolean {
+  export function isPiecePlainStar(row: number, col: number): boolean {
     return state.board[row][col] === 'S';
   }
   
