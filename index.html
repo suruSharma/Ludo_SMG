@@ -117,52 +117,28 @@
             width="100%" height="100%">
           <rect width="100" height="100" style="fill:black;stroke-width:1;stroke:black" />
         </svg>
-        <svg ng-if="game.isPieceRedLane(row, col) || game.isPieceRedHome(row, col) || game.isPieceRedBorder(row,col)"
+        <svg ng-if="game.isPieceRedLane(row, col) || game.isPieceRedHome(row, col) || game.isPieceRedBorder(row,col) || game.isPieceRedStar(row, col)"
             id="{{'e2e_test_pieceX_' + row + 'x' + col}}"
             width="100%" height="100%">
           <rect width="100" height="100" style="fill:red;stroke-width:1;stroke:red" />
         </svg>
         
-        <svg ng-if="game.isPieceGreenLane(row, col) || game.isPieceGreenHome(row, col) || game.isPieceGreenBorder(row,col)"
+        <svg ng-if="game.isPieceGreenLane(row, col) || game.isPieceGreenHome(row, col) || game.isPieceGreenBorder(row,col) || game.isPieceGreenStar(row, col)"
             id="{{'e2e_test_pieceX_' + row + 'x' + col}}"
             width="100%" height="100%">
           <rect width="100" height="100" style="fill:green;stroke-width:1;stroke:green" />
         </svg>
         
-        <svg ng-if="game.isPieceYellowLane(row, col) || game.isPieceYellowHome(row, col) || game.isPieceYellowBorder(row,col)"
+        <svg ng-if="game.isPieceYellowLane(row, col) || game.isPieceYellowHome(row, col) || game.isPieceYellowBorder(row,col) || game.isPieceYellowStar(row, col)"
             id="{{'e2e_test_pieceX_' + row + 'x' + col}}"
             width="100%" height="100%">
           <rect width="100" height="100" style="fill:orange;stroke-width:1;stroke:orange" />
         </svg>
         
-        <svg ng-if="game.isPieceBlueLane(row, col) || game.isPieceBlueHome(row, col) || game.isPieceBlueBorder(row,col)"
+        <svg ng-if="game.isPieceBlueLane(row, col) || game.isPieceBlueHome(row, col) || game.isPieceBlueBorder(row,col) || game.isPieceBlueStar(row, col)"
             id="{{'e2e_test_pieceX_' + row + 'x' + col}}"
             width="100%" height="100%">
           <rect width="100" height="100" style="fill:blue;stroke-width:1;stroke:blue" />
-        </svg>
-        
-        <svg ng-if="game.isPieceRedStar(row, col)"
-            id="{{'e2e_test_pieceX_' + row + 'x' + col}}"
-            width="100%" height="100%">
-         <polygon points="25,2.5 10,49.5 47.5,19.5 2.5,19.5 40,49.5" style="fill:red;stroke:red;stroke-width:1;fill-rule:nonzero;"/>
-        </svg>
-        
-        <svg ng-if="game.isPieceGreenStar(row, col)"
-            id="{{'e2e_test_pieceX_' + row + 'x' + col}}"
-            width="100%" height="100%">
-          <polygon points="25,2.5 10,49.5 47.5,19.5 2.5,19.5 40,49.5" style="fill:green;stroke:green;stroke-width:1;fill-rule:nonzero;"/>
-        </svg>
-        
-        <svg ng-if="game.isPieceYellowStar(row, col)"
-            id="{{'e2e_test_pieceX_' + row + 'x' + col}}"
-            width="100%" height="100%">
-          <polygon points="25,2.5 10,49.5 47.5,19.5 2.5,19.5 40,49.5" style="fill:orange;stroke:orange;stroke-width:1;fill-rule:nonzero;"/>
-        </svg>
-        
-        <svg ng-if="game.isPieceBlueStar(row, col)"
-            id="{{'e2e_test_pieceX_' + row + 'x' + col}}"
-            width="100%" height="100%">
-          <polygon points="25,2.5 10,49.5 47.5,19.5 2.5,19.5 40,49.5" style="fill:blue;stroke:blue;stroke-width:1;fill-rule:nonzero;"/>
         </svg>
         
         <svg ng-if="game.isPiecePlainStar(row, col)"
