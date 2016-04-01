@@ -109,91 +109,119 @@
           ng-class="{slowlyAppear: game.shouldSlowlyAppear(row, col)}"
           ng-if="game.shouldShowImage(row, col)">
         <svg ng-if="game.isPieceInaccessible(row, col)"
-            id="{{'e2e_test_pieceO_' + row + 'x' + col}}"
+            id="{{'e2e_test_pieceX_' + row + 'x' + col}}"
             width="100%" height="100%">
           <rect width="100" height="100" style="fill:white;stroke-width:1;stroke:white" />
         </svg>
         <svg ng-if="game.isPieceBlack(row, col)"
-            id="{{'e2e_test_pieceO_' + row + 'x' + col}}"
+            id="{{'e2e_test_pieceBlack_' + row + 'x' + col}}"
             width="100%" height="100%">
           <rect width="100" height="100" style="fill:black;stroke-width:1;stroke:black" />
         </svg>
         <svg ng-if="game.isPieceRedLane(row, col) || game.isPieceRedHome(row, col) || game.isPieceRedBorder(row,col)"
-            id="{{'e2e_test_pieceX_' + row + 'x' + col}}"
+            id="{{'e2e_test_pieceR_' + row + 'x' + col}}"
             width="100%" height="100%">
           <rect width="100" height="100" style="fill:#ff4d4d;stroke-width:1;stroke:#ff4d4d" />
         </svg>
         <svg ng-if="game.isPieceRedStar(row, col)"
-            id="{{'e2e_test_pieceX_' + row + 'x' + col}}"
+            id="{{'e2e_test_pieceRS_' + row + 'x' + col}}"
             width="100%" height="100%">
           <rect width="100" height="100" style="fill:#ff4d4d;stroke-width:1;stroke:#ff4d4d" />
           <polygon points="25,2.5 10,49.5 47.5,19.5 2.5,19.5 40,49.5" style="fill:gold;stroke:gold;stroke-width:1;fill-rule:nonzero;"/>
         </svg>
         <svg ng-if="game.isPieceGreenLane(row, col) || game.isPieceGreenHome(row, col) || game.isPieceGreenBorder(row,col)"
-            id="{{'e2e_test_pieceX_' + row + 'x' + col}}"
+            id="{{'e2e_test_pieceG_' + row + 'x' + col}}"
             width="100%" height="100%">
           <rect width="100" height="100" style="fill:#53c653;stroke-width:1;stroke:#53c653" />
         </svg>
         <svg ng-if="game.isPieceGreenStar(row, col)"
-            id="{{'e2e_test_pieceX_' + row + 'x' + col}}"
+            id="{{'e2e_test_pieceGS_' + row + 'x' + col}}"
             width="100%" height="100%">
           <rect width="100" height="100" style="fill:#53c653;stroke-width:1;stroke:#53c653" />
           <polygon points="25,2.5 10,49.5 47.5,19.5 2.5,19.5 40,49.5" style="fill:gold;stroke:gold;stroke-width:1;fill-rule:nonzero;"/>
         </svg>
         <svg ng-if="game.isPieceYellowLane(row, col) || game.isPieceYellowHome(row, col) || game.isPieceYellowBorder(row,col)"
-            id="{{'e2e_test_pieceX_' + row + 'x' + col}}"
+            id="{{'e2e_test_pieceY_' + row + 'x' + col}}"
             width="100%" height="100%">
           <rect width="100" height="100" style="fill:orange;stroke-width:1;stroke:orange" />
         </svg>
         <svg ng-if="game.isPieceYellowStar(row, col)"
-            id="{{'e2e_test_pieceX_' + row + 'x' + col}}"
+            id="{{'e2e_test_pieceYS_' + row + 'x' + col}}"
             width="100%" height="100%">
           <rect width="100" height="100" style="fill:orange;stroke-width:1;stroke:orange" />
           <polygon points="25,2.5 10,49.5 47.5,19.5 2.5,19.5 40,49.5" style="fill:gold;stroke:gold;stroke-width:1;fill-rule:nonzero;"/>
         </svg>
         <svg ng-if="game.isPieceBlueLane(row, col) || game.isPieceBlueHome(row, col) || game.isPieceBlueBorder(row,col)"
-            id="{{'e2e_test_pieceX_' + row + 'x' + col}}"
+            id="{{'e2e_test_pieceB_' + row + 'x' + col}}"
             width="100%" height="100%">
           <rect width="100" height="100" style="fill:#6666ff;stroke-width:1;stroke:#6666ff" />
         </svg>
         <svg ng-if="game.isPieceBlueStar(row, col)"
-            id="{{'e2e_test_pieceX_' + row + 'x' + col}}"
+            id="{{'e2e_test_pieceBS_' + row + 'x' + col}}"
             width="100%" height="100%">
           <rect width="100" height="100" style="fill:#6666ff;stroke-width:1;stroke:#6666ff" />
           <polygon points="25,2.5 10,49.5 47.5,19.5 2.5,19.5 40,49.5" style="fill:gold;stroke:gold;stroke-width:1;fill-rule:nonzero;"/>
         </svg>
         <svg ng-if="game.isPiecePlainStar(row, col)"
-            id="{{'e2e_test_pieceX_' + row + 'x' + col}}"
+            id="{{'e2e_test_pieceS_' + row + 'x' + col}}"
             width="100%" height="100%">
           <polygon points="25,2.5 10,49.5 47.5,19.5 2.5,19.5 40,49.5" style="fill:gold;stroke:gold;stroke-width:1;fill-rule:nonzero;"/>
         </svg>
         
         <svg ng-if="game.isPieceRedPlayer(row, col)"
-            id="{{'e2e_test_pieceX_' + row + 'x' + col}}"
+            id="{{'e2e_test_pieceRP_' + row + 'x' + col}}"
             width="100%" height="100%">
             <rect width="100%" height="100%" fill="#ff4d4d"/>
-          <circle cx="25" cy="25" r="10" stroke="#e60000" stroke-width="3" fill="#e60000" />
+            <radialGradient id="redCircle"
+                  gradientUnits="objectBoundingBox" fx="30%" fy="30%">
+                  <stop offset="0%" style="stop-color:#FFFFFF" />
+                  <stop offset="40%" style="stop-color:#e60000" />
+                  <stop offset="100%" style="stop-color:#e60000" />
+                </radialGradient>
+                <circle cx="25" cy="25" r="10" stroke="#e60000" stroke-width="1"
+      style="fill:url(#redCircle)" />
         </svg>
         
         <svg ng-if="game.isPieceGreenPlayer(row, col)"
-            id="{{'e2e_test_pieceX_' + row + 'x' + col}}"
+            id="{{'e2e_test_pieceGP_' + row + 'x' + col}}"
             width="100%" height="100%">
             <rect width="100%" height="100%" fill="#53c653"/>
-          <circle cx="25" cy="25" r="10" stroke="#2d862d" stroke-width="3" fill="#2d862d" />
+            <radialGradient id="greenCircle"
+                  gradientUnits="objectBoundingBox" fx="30%" fy="30%">
+                  <stop offset="0%" style="stop-color:#FFFFFF" />
+                  <stop offset="40%" style="stop-color:#2d862d" />
+                  <stop offset="100%" style="stop-color:#2d862d" />
+                </radialGradient>
+                <circle cx="25" cy="25" r="10" stroke="#2d862d" stroke-width="1"
+      style="fill:url(#greenCircle)" />
         </svg>
         
         <svg ng-if="game.isPieceBluePlayer(row, col)"
-            id="{{'e2e_test_pieceX_' + row + 'x' + col}}"
+            id="{{'e2e_test_pieceBP_' + row + 'x' + col}}"
             width="100%" height="100%">
             <rect width="100%" height="100%" fill="#6666ff"/>
-          <circle cx="25" cy="25" r="10" stroke="#0000b3" stroke-width="3" fill="#0000b3" />
+            <radialGradient id="blueCircle"
+                  gradientUnits="objectBoundingBox" fx="30%" fy="30%">
+                  <stop offset="0%" style="stop-color:#FFFFFF" />
+                  <stop offset="40%" style="stop-color:#0000b3" />
+                  <stop offset="100%" style="stop-color:#0000b3" />
+                </radialGradient>
+                <circle cx="25" cy="25" r="10" stroke="#0000b3" stroke-width="1"
+      style="fill:url(#blueCircle)" />
         </svg>
         
         <svg ng-if="game.isPieceYellowPlayer(row, col)"
-            id="{{'e2e_test_pieceX_' + row + 'x' + col}}"
+            id="{{'e2e_test_pieceYP_' + row + 'x' + col}}"
             width="100%" height="100%">
             <rect width="100%" height="100%" fill="orange"/>
-          <circle cx="25" cy="25" r="10" stroke="#cc7a00" stroke-width="3" fill="#cc7a00" />
+            <radialGradient id="orangeCircle"
+                  gradientUnits="objectBoundingBox" fx="30%" fy="30%">
+                  <stop offset="0%" style="stop-color:#FFFFFF" />
+                  <stop offset="40%" style="stop-color:#cc7a00" />
+                  <stop offset="100%" style="stop-color:#cc7a00" />
+                </radialGradient>
+                <circle cx="25" cy="25" r="10" stroke="#cc7a00" stroke-width="1"
+                    style="fill:url(#orangeCircle)" />
         </svg>
       </div>
     </div>
