@@ -1,0 +1,27 @@
+On page load :
+    - init
+    - updateUI
+    
+    
+On cell click:
+    - cellClicked(row, col)
+    - createMove(IState, row, col, numericalID of player who clicked)
+    - isTie; in our case is always false. There cannot be a tie
+    - makeMove
+    - convertNewMove
+    - sendUpdateUi
+    - checkMoveOk (IStateTransition)
+    
+    
+IStateTransition :
+    turnIndexBeforeMove : number; // the player ID of the player who made the move
+    stateBeforeMove: IState; // initially - undefined, 
+    numberOfPlayers: number; // 4 in our case
+    move: IMove; //
+    
+    
+IState
+  board: Board;
+  delta: BoardDelta;
+
+  
