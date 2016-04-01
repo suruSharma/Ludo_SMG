@@ -132,7 +132,7 @@ module game {
   }
 
   //Move Allowed
-  export function isPieceInAccessible(row: number, col: number): boolean {
+  export function isPieceInaccessible(row: number, col: number): boolean {
     return state.board[row][col] === 'X';
   }
   
@@ -207,6 +207,24 @@ module game {
   export function isPieceYellowPlayer(row: number, col: number): boolean {
     return state.board[row][col] === 'YP';
   }
+  //color of border
+  export function isPieceRedBorder(row: number, col: number): boolean {
+    return state.board[row][col] === 'RB';
+  }
+  export function isPieceBlueBorder(row: number, col: number): boolean {
+    return state.board[row][col] === 'BB';
+  }
+  export function isPieceGreenBorder(row: number, col: number): boolean {
+    return state.board[row][col] === 'GB';
+  }
+  export function isPieceYellowBorder(row: number, col: number): boolean {
+    return state.board[row][col] === 'YB';
+  }
+  export function isPieceBlack(row: number, col: number): boolean {
+    return state.board[row][col] === 'B';
+  }
+  
+  
   
   
 

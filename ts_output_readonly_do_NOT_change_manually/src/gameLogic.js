@@ -15,16 +15,25 @@ var gameLogic;
         for (var i = 0; i < gameLogic.ROWS; i++) {
             board[i] = [];
             for (var j = 0; j < gameLogic.COLS; j++) {
-                if (i == 0 || i == 14) {
+                if (i == 0) {
                     if (j == 6 || j == 7 || j == 8) {
                         board[i][j] = ' ';
+                    }
+                    else if (j == 0 || j == 1 || j == 2 || j == 3 || j == 4 || j == 5) {
+                        board[i][j] = 'RB';
+                    }
+                    else if (j == 9 || j == 10 || j == 11 || j == 12 || j == 13 || j == 14) {
+                        board[i][j] = 'BB';
                     }
                     else {
                         board[i][j] = 'X';
                     }
                 }
                 if (i == 1) {
-                    if (j == 6) {
+                    if (j == 0 || j == 5) {
+                        board[i][j] = 'RB';
+                    }
+                    else if (j == 6) {
                         board[i][j] = ' ';
                     }
                     else if (j == 7) {
@@ -33,16 +42,27 @@ var gameLogic;
                     else if (j == 8) {
                         board[i][j] = 'BS';
                     }
+                    else if (j == 9 || j == 14) {
+                        board[i][j] = 'BB';
+                    }
                     else {
                         board[i][j] = 'X';
                     }
                 }
-                if (i == 2) {
-                    if (j == 2 || j == 3) {
+                if (i == 2 || i == 3) {
+                    if (j == 0 || j == 5) {
+                        board[i][j] = 'RB';
+                    }
+                    else if (j == 2 || j == 3) {
                         board[i][j] = 'RP';
                     }
                     else if (j == 6) {
-                        board[i][j] = 'S';
+                        if (i == 2) {
+                            board[i][j] = 'S';
+                        }
+                        else if (i == 3) {
+                            board[i][j] = ' ';
+                        }
                     }
                     else if (j == 7) {
                         board[i][j] = 'BL';
@@ -53,13 +73,16 @@ var gameLogic;
                     else if (j == 11 || j == 12) {
                         board[i][j] = 'BP';
                     }
+                    else if (j == 9 || j == 14) {
+                        board[i][j] = 'BB';
+                    }
                     else {
                         board[i][j] = 'X';
                     }
                 }
-                if (i == 3) {
-                    if (j == 2 || j == 3) {
-                        board[i][j] = 'RP';
+                if (i == 4 || i == 5) {
+                    if (j == 0 || j == 5) {
+                        board[i][j] = 'RB';
                     }
                     else if (j == 6 || j == 8) {
                         board[i][j] = ' ';
@@ -67,19 +90,16 @@ var gameLogic;
                     else if (j == 7) {
                         board[i][j] = 'BL';
                     }
-                    else if (j == 11 || j == 12) {
-                        board[i][j] = 'BP';
+                    else if (j == 9 || j == 14) {
+                        board[i][j] = 'BB';
                     }
-                    else {
-                        board[i][j] = 'X';
-                    }
-                }
-                if (i == 4 || i == 5) {
-                    if (j == 6 || j == 8) {
-                        board[i][j] = ' ';
-                    }
-                    else if (j == 7) {
-                        board[i][j] = 'BL';
+                    else if (i == 5) {
+                        if (j == 1 || j == 2 || j == 3 || j == 4) {
+                            board[i][j] = 'RB';
+                        }
+                        else if (j == 10 || j == 11 || j == 12 || j == 13) {
+                            board[i][j] = 'BB';
+                        }
                     }
                     else {
                         board[i][j] = 'X';
@@ -90,7 +110,7 @@ var gameLogic;
                         board[i][j] = 'RS';
                     }
                     else if (j == 6 || j == 8) {
-                        board[i][j] = 'X';
+                        board[i][j] = 'B';
                     }
                     else if (j == 7) {
                         board[i][j] = 'BH';
@@ -110,7 +130,7 @@ var gameLogic;
                         board[i][j] = 'RH';
                     }
                     else if (j == 7) {
-                        board[i][j] = 'X';
+                        board[i][j] = 'B';
                     }
                     else if (j == 8) {
                         board[i][j] = 'YH';
@@ -127,7 +147,7 @@ var gameLogic;
                         board[i][j] = 'S';
                     }
                     else if (j == 6 || j == 8) {
-                        board[i][j] = 'X';
+                        board[i][j] = 'B';
                     }
                     else if (j == 7) {
                         board[i][j] = 'GH';
@@ -139,19 +159,28 @@ var gameLogic;
                         board[i][j] = ' ';
                     }
                 }
-                if (i == 9 || i == 10) {
-                    if (j == 6 || j == 8) {
+                if (i == 9 || i == 14) {
+                    if (j >= 0 && j <= 5) {
+                        board[i][j] = 'GB';
+                    }
+                    else if (j == 6 || j == 8) {
                         board[i][j] = ' ';
                     }
-                    else if (j == 7) {
+                    else if (i == 9 && j == 7) {
                         board[i][j] = 'GL';
+                    }
+                    else if (j >= 9 && j <= 14) {
+                        board[i][j] = 'YB';
                     }
                     else {
                         board[i][j] = 'X';
                     }
                 }
-                if (i == 11) {
-                    if (j == 2 || j == 3) {
+                if (i == 10 || i == 11) {
+                    if (j == 0 || j == 5) {
+                        board[i][j] = 'GB';
+                    }
+                    else if (i == 11 && (j == 2 || j == 3)) {
                         board[i][j] = 'GP';
                     }
                     else if (j == 6 || j == 8) {
@@ -160,15 +189,21 @@ var gameLogic;
                     else if (j == 7) {
                         board[i][j] = 'GL';
                     }
-                    else if (j == 11 || j == 12) {
+                    else if (i == 11 && (j == 11 || j == 12)) {
                         board[i][j] = 'YP';
+                    }
+                    else if (j == 9 || j == 14) {
+                        board[i][j] = 'YB';
                     }
                     else {
                         board[i][j] = 'X';
                     }
                 }
                 if (i == 12) {
-                    if (j == 2 || j == 3) {
+                    if (j == 0 || j == 5) {
+                        board[i][j] = 'GB';
+                    }
+                    else if (j == 2 || j == 3) {
                         board[i][j] = 'GP';
                     }
                     else if (j == 6) {
@@ -183,12 +218,18 @@ var gameLogic;
                     else if (j == 11 || j == 12) {
                         board[i][j] = 'YP';
                     }
+                    else if (j == 9 || j == 14) {
+                        board[i][j] = 'YB';
+                    }
                     else {
                         board[i][j] = 'X';
                     }
                 }
                 if (i == 13) {
-                    if (j == 6) {
+                    if (j == 0 || j == 5) {
+                        board[i][j] = 'GB';
+                    }
+                    else if (j == 6) {
                         board[i][j] = 'GS';
                     }
                     else if (j == 7) {
@@ -196,6 +237,9 @@ var gameLogic;
                     }
                     else if (j == 8) {
                         board[i][j] = ' ';
+                    }
+                    else if (j == 9 || j == 14) {
+                        board[i][j] = 'YB';
                     }
                     else {
                         board[i][j] = 'X';

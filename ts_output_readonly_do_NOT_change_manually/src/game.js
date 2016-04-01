@@ -121,10 +121,10 @@ var game;
     }
     game.shouldShowImage = shouldShowImage;
     //Move Allowed
-    function isPieceInAccessible(row, col) {
+    function isPieceInaccessible(row, col) {
         return game.state.board[row][col] === 'X';
     }
-    game.isPieceInAccessible = isPieceInAccessible;
+    game.isPieceInaccessible = isPieceInaccessible;
     //Color of homes
     function isPieceRedHome(row, col) {
         return game.state.board[row][col] === 'RH';
@@ -197,6 +197,27 @@ var game;
         return game.state.board[row][col] === 'YP';
     }
     game.isPieceYellowPlayer = isPieceYellowPlayer;
+    //color of border
+    function isPieceRedBorder(row, col) {
+        return game.state.board[row][col] === 'RB';
+    }
+    game.isPieceRedBorder = isPieceRedBorder;
+    function isPieceBlueBorder(row, col) {
+        return game.state.board[row][col] === 'BB';
+    }
+    game.isPieceBlueBorder = isPieceBlueBorder;
+    function isPieceGreenBorder(row, col) {
+        return game.state.board[row][col] === 'GB';
+    }
+    game.isPieceGreenBorder = isPieceGreenBorder;
+    function isPieceYellowBorder(row, col) {
+        return game.state.board[row][col] === 'YB';
+    }
+    game.isPieceYellowBorder = isPieceYellowBorder;
+    function isPieceBlack(row, col) {
+        return game.state.board[row][col] === 'B';
+    }
+    game.isPieceBlack = isPieceBlack;
     function shouldSlowlyAppear(row, col) {
         return !game.animationEnded &&
             game.state.delta &&
