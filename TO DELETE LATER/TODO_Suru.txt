@@ -3,3 +3,6 @@ Update files in the img folder
 Update text for rules in game.ts
 
 Check how to make coins/pawns in SVG?
+
+Problem when you zoom in/out on the page. UI distorts completely
+
