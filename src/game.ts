@@ -69,6 +69,7 @@ module game {
       sendComputerMove();
     });
   }
+  
 
   function sendComputerMove() {
     if (!isComputerTurn) {
@@ -107,6 +108,9 @@ module game {
     }
   }
 
+  export function rollDice() {
+    log.info("Hello");
+    }
   export function cellClicked(row: number, col: number): void {
     log.info("Clicked on cell:", row, col);
     if (window.location.search === '?throwException') { // to test encoding a stack trace with sourcemap
