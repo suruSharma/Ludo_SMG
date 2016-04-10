@@ -16,8 +16,8 @@ var game;
         log.log("Translation of 'RULES_OF_LUDO' is " + translate('RULES_OF_LUDO'));
         resizeGameAreaService.setWidthToHeight(1);
         moveService.setGame({
-            minNumberOfPlayers: 2,
-            maxNumberOfPlayers: 2,
+            minNumberOfPlayers: 4,
+            maxNumberOfPlayers: 4,
             checkMoveOk: gameLogic.checkMoveOk,
             updateUI: updateUI
         });
@@ -96,6 +96,10 @@ var game;
             }
         }
     }
+    function rollDice() {
+        log.info("Hello");
+    }
+    game.rollDice = rollDice;
     function cellClicked(row, col) {
         log.info("Clicked on cell:", row, col);
         if (window.location.search === '?throwException') {
@@ -219,9 +223,11 @@ var game;
     }
     game.isPieceBlack = isPieceBlack;
     function shouldSlowlyAppear(row, col) {
-        return !game.animationEnded &&
-            game.state.delta &&
-            game.state.delta.row === row && game.state.delta.col === col;
+        return !game.animationEnded;
+        //TODO : check this  
+        //&&
+        //state.delta &&
+        //state.delta.row === row && state.delta.col === col;
     }
     game.shouldSlowlyAppear = shouldSlowlyAppear;
     function clickedOnModal(evt) {

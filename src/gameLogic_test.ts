@@ -24,7 +24,7 @@ describe("In TicTacToe", function() {
       move: {
         turnIndexAfterMove: turnIndexAfterMove,
         endMatchScores: endMatchScores,
-        stateAfterMove: {board: boardAfterMove, delta: {row: row, col: col}}
+        stateAfterMove: {board: boardAfterMove, delta: {players : []}}//TOOD : Change this
       },
       numberOfPlayers: null
     };

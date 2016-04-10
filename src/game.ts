@@ -20,8 +20,8 @@ module game {
     log.log("Translation of 'RULES_OF_LUDO' is " + translate('RULES_OF_LUDO'));
     resizeGameAreaService.setWidthToHeight(1);
     moveService.setGame({
-      minNumberOfPlayers: 2,
-      maxNumberOfPlayers: 2,
+      minNumberOfPlayers: 4,
+      maxNumberOfPlayers: 4,
       checkMoveOk: gameLogic.checkMoveOk,
       updateUI: updateUI
     });
@@ -111,6 +111,7 @@ module game {
   export function rollDice() {
     log.info("Hello");
     }
+    
   export function cellClicked(row: number, col: number): void {
     log.info("Clicked on cell:", row, col);
     if (window.location.search === '?throwException') { // to test encoding a stack trace with sourcemap
@@ -233,9 +234,11 @@ module game {
   
 
   export function shouldSlowlyAppear(row: number, col: number): boolean {
-    return !animationEnded &&
-        state.delta &&
-        state.delta.row === row && state.delta.col === col;
+    return !animationEnded;
+    //TODO : check this  
+        //&&
+        //state.delta &&
+        //state.delta.row === row && state.delta.col === col;
   }
 
   export function clickedOnModal(evt: Event) {

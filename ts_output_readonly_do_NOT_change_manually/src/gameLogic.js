@@ -3,12 +3,26 @@ var gameLogic;
 (function (gameLogic) {
     gameLogic.ROWS = 15;
     gameLogic.COLS = 15;
+    gameLogic.NUMPLAYERS = 4;
     var playerCount = {
         'R': 4,
         'B': 4,
         'G': 4,
         'Y': 4
     };
+    function setIntialPlayerConfiguration() {
+        var initPlayerState = [];
+        var redPlayer = { pawnsOnBoard: 4, color: 'R', position: [] };
+        var bluePlayer = { pawnsOnBoard: 4, color: 'B', position: [] };
+        var yellowPlayer = { pawnsOnBoard: 4, color: 'Y', position: [] };
+        var greenPlayer = { pawnsOnBoard: 4, color: 'G', position: [] };
+        initPlayerState.push(redPlayer);
+        initPlayerState.push(bluePlayer);
+        initPlayerState.push(yellowPlayer);
+        initPlayerState.push(greenPlayer);
+        var delta = { players: initPlayerState };
+        return delta;
+    }
     /** Returns the initial Ludo board, which is a ROWSxCOLS matrix containing ''. */
     function getInitialBoard() {
         var board = [];
@@ -250,7 +264,7 @@ var gameLogic;
         return board;
     }
     function getInitialState() {
-        return { board: getInitialBoard(), delta: null };
+        return { board: getInitialBoard(), delta: setIntialPlayerConfiguration() };
     }
     gameLogic.getInitialState = getInitialState;
     /**
@@ -262,10 +276,13 @@ var gameLogic;
     /**
      * Return the id of the player if the player does not have any pawns on the board. Else return an empty string
      */
-    function getWinner(player) {
-        var countOnBoard = player.pawnsOnBoard;
-        if (countOnBoard == 0) {
-            return player.id;
+    function getWinner(boardDelta) {
+        var players = boardDelta.players;
+        for (var i = 0; i < 4; i++) {
+            var player = players[i];
+            if (player.pawnsOnBoard == 0) {
+                return player.color;
+            }
         }
         return '';
     }
@@ -278,15 +295,17 @@ var gameLogic;
             stateBeforeMove = getInitialState();
         }
         var board = stateBeforeMove.board;
+        var boardDelta = stateBeforeMove.delta;
         if (board[row][col] !== '') {
             throw new Error("One can only make a move in an empty position!");
         }
-        if (getWinner(board) !== '' || isTie(board)) {
+        if (getWinner(boardDelta) !== '' || isTie(board)) {
             throw new Error("Can only make a move if the game is not over!");
         }
         var boardAfterMove = angular.copy(board);
         boardAfterMove[row][col] = turnIndexBeforeMove === 0 ? 'X' : 'O';
-        var winner = getWinner(boardAfterMove);
+        //TODO : create board delta after move and pass it to the getWinner method
+        var winner = getWinner(boardDelta); //to be changed. 
         var endMatchScores;
         var turnIndexAfterMove;
         if (winner !== '' || isTie(boardAfterMove)) {
@@ -299,7 +318,7 @@ var gameLogic;
             turnIndexAfterMove = 1 - turnIndexBeforeMove;
             endMatchScores = null;
         }
-        var delta = { row: row, col: col };
+        var delta = { players: [] }; //TODO : create/add players array
         var stateAfterMove = { delta: delta, board: boardAfterMove };
         return { endMatchScores: endMatchScores, turnIndexAfterMove: turnIndexAfterMove, stateAfterMove: stateAfterMove };
     }
@@ -311,8 +330,9 @@ var gameLogic;
         var stateBeforeMove = stateTransition.stateBeforeMove;
         var move = stateTransition.move;
         var deltaValue = stateTransition.move.stateAfterMove.delta;
-        var row = deltaValue.row;
-        var col = deltaValue.col;
+        //TODO: Check the values here
+        var row = 0; //deltaValue.row;
+        var col = 1; //deltaValue.col;
         var expectedMove = createMove(stateBeforeMove, row, col, turnIndexBeforeMove);
         if (!angular.equals(move, expectedMove)) {
             throw new Error("Expected move=" + angular.toJson(expectedMove, true) +
