@@ -31,7 +31,7 @@ var gameLogic;
             for (var j = 0; j < gameLogic.COLS; j++) {
                 if (i == 0) {
                     if (j == 6 || j == 7 || j == 8) {
-                        board[i][j] = ' ';
+                        board[i][j] = '';
                     }
                     else if (j == 0 || j == 1 || j == 2 || j == 3 || j == 4 || j == 5) {
                         board[i][j] = 'RB';
@@ -48,7 +48,7 @@ var gameLogic;
                         board[i][j] = 'RB';
                     }
                     else if (j == 6) {
-                        board[i][j] = ' ';
+                        board[i][j] = '';
                     }
                     else if (j == 7) {
                         board[i][j] = 'BL';
@@ -75,14 +75,14 @@ var gameLogic;
                             board[i][j] = 'S';
                         }
                         else if (i == 3) {
-                            board[i][j] = ' ';
+                            board[i][j] = '';
                         }
                     }
                     else if (j == 7) {
                         board[i][j] = 'BL';
                     }
                     else if (j == 8) {
-                        board[i][j] = ' ';
+                        board[i][j] = '';
                     }
                     else if (j == 11 || j == 12) {
                         board[i][j] = 'BP';
@@ -99,7 +99,7 @@ var gameLogic;
                         board[i][j] = 'RB';
                     }
                     else if (j == 6 || j == 8) {
-                        board[i][j] = ' ';
+                        board[i][j] = '';
                     }
                     else if (j == 7) {
                         board[i][j] = 'BL';
@@ -133,7 +133,7 @@ var gameLogic;
                         board[i][j] = 'S';
                     }
                     else {
-                        board[i][j] = ' ';
+                        board[i][j] = '';
                     }
                 }
                 if (i == 7) {
@@ -153,7 +153,7 @@ var gameLogic;
                         board[i][j] = 'YL';
                     }
                     else {
-                        board[i][j] = ' ';
+                        board[i][j] = '';
                     }
                 }
                 if (i == 8) {
@@ -170,7 +170,7 @@ var gameLogic;
                         board[i][j] = 'YS';
                     }
                     else {
-                        board[i][j] = ' ';
+                        board[i][j] = '';
                     }
                 }
                 if (i == 9 || i == 14) {
@@ -178,7 +178,7 @@ var gameLogic;
                         board[i][j] = 'GB';
                     }
                     else if (j == 6 || j == 8) {
-                        board[i][j] = ' ';
+                        board[i][j] = '';
                     }
                     else if (i == 9 && j == 7) {
                         board[i][j] = 'GL';
@@ -198,7 +198,7 @@ var gameLogic;
                         board[i][j] = 'GP';
                     }
                     else if (j == 6 || j == 8) {
-                        board[i][j] = ' ';
+                        board[i][j] = '';
                     }
                     else if (j == 7) {
                         board[i][j] = 'GL';
@@ -221,7 +221,7 @@ var gameLogic;
                         board[i][j] = 'GP';
                     }
                     else if (j == 6) {
-                        board[i][j] = ' ';
+                        board[i][j] = '';
                     }
                     else if (j == 7) {
                         board[i][j] = 'GL';
@@ -250,7 +250,7 @@ var gameLogic;
                         board[i][j] = 'GL';
                     }
                     else if (j == 8) {
-                        board[i][j] = ' ';
+                        board[i][j] = '';
                     }
                     else if (j == 9 || j == 14) {
                         board[i][j] = 'YB';
