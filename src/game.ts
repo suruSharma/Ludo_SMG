@@ -131,8 +131,8 @@ module game {
     die1.innerHTML = diceTotal+'';
     status.innerHTML = "You rolled "+diceTotal+".";
     diceValue = d1;
-    //button.disabled=true;
     dieValue = diceTotal;    
+    button.disabled=true;
     }
     
   export function cellClicked(row: number, col: number): void {
@@ -146,7 +146,7 @@ module game {
     try {
       let nextMove = gameLogic.createMove(
           state, row, col, move.turnIndexAfterMove);
-      canMakeMove = nextMove.canMove;
+      canMakeMove = false;
       moveService.makeMove(nextMove);
     } catch (e) {
       log.info(["Cell is already full in position:", row, col]);
@@ -309,10 +309,33 @@ module game {
     return state.board[row][col] === 'B';
   }
   
+  //Set color of cells
+  export function isPieceRedCell(row:number, col:number):boolean{
+      return state.board[row][col] === 'RC'
+  }
+  export function isPieceBlueCell(row:number, col:number):boolean{
+      return state.board[row][col] === 'BC'
+  }
+  export function isPieceYellowCell(row:number, col:number):boolean{
+      return state.board[row][col] === 'YC'
+  }
+  export function isPieceGreenCell(row:number, col:number):boolean{
+      return state.board[row][col] === 'GC'
+  }
   
+  export function isPieceRedPawn(row:number, col:number):boolean{
+      return state.board[row][col] === 'R'
+  }
+  export function isPieceBluePawn(row:number, col:number):boolean{
+      return state.board[row][col] === 'B'
+  }
+  export function isPieceYellowPawn(row:number, col:number):boolean{
+      return state.board[row][col] === 'Y'
+  }
+  export function isPieceGreenPawn(row:number, col:number):boolean{
+      return state.board[row][col] === 'G'
+  }
   
-  
-
   export function shouldSlowlyAppear(row: number, col: number): boolean {
     return !animationEnded;
     //TODO : check this  

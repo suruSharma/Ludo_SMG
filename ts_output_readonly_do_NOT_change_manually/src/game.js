@@ -105,7 +105,7 @@ var game;
         die1.innerHTML = diceTotal + '';
         status.innerHTML = "You rolled " + diceTotal + ".";
         game.diceValue = d1;
-        //button.disabled=true;
+        button.disabled = true;
     }
     game.rollDice = rollDice;
     function cellClicked(row, col) {
@@ -118,7 +118,7 @@ var game;
         }
         try {
             var nextMove = gameLogic.createMove(game.state, row, col, game.move.turnIndexAfterMove);
-            game.canMakeMove = nextMove.canMove;
+            game.canMakeMove = false;
             moveService.makeMove(nextMove);
         }
         catch (e) {
@@ -230,6 +230,39 @@ var game;
         return game.state.board[row][col] === 'B';
     }
     game.isPieceBlack = isPieceBlack;
+    //Set color of cells
+    function isPieceRedCell(row, col) {
+        return game.state.board[row][col] === 'RC';
+    }
+    game.isPieceRedCell = isPieceRedCell;
+    function isPieceBlueCell(row, col) {
+        return game.state.board[row][col] === 'BC';
+    }
+    game.isPieceBlueCell = isPieceBlueCell;
+    function isPieceYellowCell(row, col) {
+        return game.state.board[row][col] === 'YC';
+    }
+    game.isPieceYellowCell = isPieceYellowCell;
+    function isPieceGreenCell(row, col) {
+        return game.state.board[row][col] === 'GC';
+    }
+    game.isPieceGreenCell = isPieceGreenCell;
+    function isPieceRedPawn(row, col) {
+        return game.state.board[row][col] === 'R';
+    }
+    game.isPieceRedPawn = isPieceRedPawn;
+    function isPieceBluePawn(row, col) {
+        return game.state.board[row][col] === 'B';
+    }
+    game.isPieceBluePawn = isPieceBluePawn;
+    function isPieceYellowPawn(row, col) {
+        return game.state.board[row][col] === 'Y';
+    }
+    game.isPieceYellowPawn = isPieceYellowPawn;
+    function isPieceGreenPawn(row, col) {
+        return game.state.board[row][col] === 'G';
+    }
+    game.isPieceGreenPawn = isPieceGreenPawn;
     function shouldSlowlyAppear(row, col) {
         return !game.animationEnded;
         //TODO : check this  

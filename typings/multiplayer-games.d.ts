@@ -11,8 +11,6 @@ interface IMove {
   endMatchScores: number[];
   turnIndexAfterMove: number;
   stateAfterMove: IState;
-  errorCode : number;
-  canMove : boolean;
 }
 interface IStateTransition {
   turnIndexBeforeMove : number;

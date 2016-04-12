@@ -5,12 +5,40 @@ var gameLogic;
     gameLogic.COLS = 15;
     gameLogic.NUMPLAYERS = 4;
     var previousClick;
+    function getIntialPositions(player) {
+        var cells = [];
+        if (player === 'R') {
+            cells.push({ row: 2, col: 2 });
+            cells.push({ row: 2, col: 3 });
+            cells.push({ row: 3, col: 2 });
+            cells.push({ row: 3, col: 3 });
+        }
+        else if (player === 'B') {
+            cells.push({ row: 2, col: 11 });
+            cells.push({ row: 2, col: 12 });
+            cells.push({ row: 3, col: 11 });
+            cells.push({ row: 3, col: 12 });
+        }
+        else if (player === 'Y') {
+            cells.push({ row: 11, col: 2 });
+            cells.push({ row: 11, col: 3 });
+            cells.push({ row: 12, col: 2 });
+            cells.push({ row: 12, col: 3 });
+        }
+        else if (player === 'G') {
+            cells.push({ row: 11, col: 11 });
+            cells.push({ row: 11, col: 12 });
+            cells.push({ row: 12, col: 11 });
+            cells.push({ row: 12, col: 12 });
+        }
+        return cells;
+    }
     function setIntialPlayerConfiguration() {
         var initPlayerState = [];
-        var redPlayer = { pawnsOnBoard: 4, color: 'R', position: [] };
-        var bluePlayer = { pawnsOnBoard: 4, color: 'B', position: [] };
-        var yellowPlayer = { pawnsOnBoard: 4, color: 'Y', position: [] };
-        var greenPlayer = { pawnsOnBoard: 4, color: 'G', position: [] };
+        var redPlayer = { pawnsOnBoard: 4, color: 'R', position: getIntialPositions('R') };
+        var bluePlayer = { pawnsOnBoard: 4, color: 'B', position: getIntialPositions('B') };
+        var yellowPlayer = { pawnsOnBoard: 4, color: 'Y', position: getIntialPositions('Y') };
+        var greenPlayer = { pawnsOnBoard: 4, color: 'G', position: getIntialPositions('G') };
         initPlayerState.push(redPlayer);
         initPlayerState.push(bluePlayer);
         initPlayerState.push(yellowPlayer);
@@ -316,6 +344,77 @@ var gameLogic;
             return 0;
         }
     }
+    function getValueForSourceCell(board, row, col) {
+        if (board[row][col] == 'RP') {
+            return 'RC';
+        }
+        else if (board[row][col] == 'BP') {
+            return 'BC';
+        }
+        else if (board[row][col] == 'YP') {
+            return 'YC';
+        }
+        else if (board[row][col] == 'GP') {
+            return 'GC';
+        }
+        else {
+            return board[row][col];
+        }
+    }
+    function getValueForDestinationCell(board, row, col, turnIndexBeforeMove) {
+        if (turnIndexBeforeMove == 0) {
+            return 'R';
+        }
+        else if (turnIndexBeforeMove == 1) {
+            return 'B';
+        }
+        else if (turnIndexBeforeMove == 2) {
+            return 'Y';
+        }
+        else if (turnIndexBeforeMove == 3) {
+            return 'G';
+        }
+    }
+    function getEndMatchScores(winner) {
+        //TODO : prepare the array of result
+        if (winner === 'R') {
+            return [1, 0, 0, 0];
+        }
+        else if (winner === 'B') {
+            return [0, 1, 0, 0];
+        }
+        else if (winner === 'Y') {
+            return [0, 0, 1, 0];
+        }
+        else if (winner === 'G') {
+            return [0, 0, 0, 1];
+        }
+    }
+    function getPawnIndex(player, row, col) {
+        for (var i = 0; i < 4; i++) {
+            if (player.position[i].row == row && player.position[i].col === col) {
+                return i;
+            }
+        }
+        return -1;
+        //This method will always find an index. If it doesn't fix it.
+    }
+    function getDeltaAfterMove(boardDelta, turnIndexBeforeMove, sourceRow, sourceCol, destinationRow, destinationCol) {
+        //TODO : Update the player information here.
+        var player = boardDelta.players[turnIndexBeforeMove];
+        //get pawn index : match the source row, col
+        var index = getPawnIndex(player, sourceRow, sourceCol);
+        var destination = { row: destinationRow, col: destinationCol };
+        if (index === -1) {
+            throw new Error("The source is not found. Cannot make the move");
+        }
+        else {
+            player.position[index] = { row: destinationRow, col: destinationCol };
+        }
+        boardDelta.players[turnIndexBeforeMove] = player;
+        //TODO : update the pawn count here
+        return boardDelta;
+    }
     /**
      * Returns the move that should be performed when player
      * with index turnIndexBeforeMove makes a move in cell row X col.
@@ -326,49 +425,35 @@ var gameLogic;
         }
         var board = stateBeforeMove.board;
         var boardDelta = stateBeforeMove.delta;
+        if (board[row][col] === '' || board[row][col] === 'X') {
+            throw new Error("One can only select a pawn to move");
+        }
         if (getWinner(boardDelta) !== '' || isTie(board)) {
             throw new Error("Can only make a move if the game is not over!");
         }
-        var turnIndexAfterMove;
-        var pawnClicked;
         var boardAfterMove = angular.copy(board);
-        if (!previousClick) {
-            var delta = { players: [] }; //TODO : create/add players array
-            var stateAfterMove = { delta: delta, board: boardAfterMove };
-            var validClick = checkPreviousCLick(row, col, turnIndexBeforeMove, board);
-            if (!validClick) {
-                return { endMatchScores: null, turnIndexAfterMove: turnIndexBeforeMove, stateAfterMove: stateAfterMove, errorCode: 1, canMove: true };
-            }
-            else {
-                pawnClicked = { row: row, col: col };
-                return { endMatchScores: null, turnIndexAfterMove: turnIndexBeforeMove, stateAfterMove: stateAfterMove, errorCode: -1, canMove: true };
-            }
+        //Set the value of the source
+        boardAfterMove[row][col] = getValueForSourceCell(board, row, col);
+        var desitnation = { row: 6, col: 2 };
+        //Set the value of the desitnation cell
+        boardAfterMove[desitnation.row][desitnation.col] = getValueForDestinationCell(board, desitnation.row, desitnation.col, turnIndexBeforeMove);
+        //TODO : update board delta here
+        var winner = getWinner(boardDelta);
+        var endMatchScores;
+        var turnIndexAfterMove;
+        if (winner !== '' || isTie(boardAfterMove)) {
+            // Game over.
+            turnIndexAfterMove = -1;
+            endMatchScores = getEndMatchScores(winner);
         }
         else {
-            previousClick = null;
-            if (board[row][col] !== '') {
-                throw new Error("One can only make a move in an empty position!");
-            }
-            boardAfterMove[row][col] = ''; //Set the original row column to empty. Will need to add additional checks here
-            //TODO: Update after the final row column has been calculated.
-            //boardAfterMove[row][col]
-            //TODO : create board delta after move and pass it to the getWinner method
-            var winner = getWinner(boardDelta); //to be changed. 
-            var endMatchScores = void 0;
-            if (winner !== '' || isTie(boardAfterMove)) {
-                // Game over.
-                turnIndexAfterMove = -1;
-                endMatchScores = winner === 'X' ? [1, 0] : winner === 'O' ? [0, 1] : [0, 0];
-            }
-            else {
-                // Game continues. Now it's the opponent's turn (the turn switches from 0 to 1 and 1 to 0).
-                turnIndexAfterMove = getNextPlayer(turnIndexBeforeMove);
-                endMatchScores = null;
-            }
-            var delta = { players: [] }; //TODO : create/add players array
-            var stateAfterMove = { delta: delta, board: boardAfterMove };
-            return { endMatchScores: endMatchScores, turnIndexAfterMove: turnIndexAfterMove, stateAfterMove: stateAfterMove, errorCode: -1, canMove: false };
+            //TODO: here, check for killed pawn, star destination
+            turnIndexAfterMove = getNextPlayer(turnIndexBeforeMove);
+            endMatchScores = null;
         }
+        var delta = getDeltaAfterMove(boardDelta, turnIndexBeforeMove, row, col, desitnation.row, desitnation.col);
+        var stateAfterMove = { delta: delta, board: boardAfterMove };
+        return { endMatchScores: endMatchScores, turnIndexAfterMove: turnIndexAfterMove, stateAfterMove: stateAfterMove };
     }
     gameLogic.createMove = createMove;
     function checkMoveOk(stateTransition) {
@@ -379,6 +464,7 @@ var gameLogic;
         var move = stateTransition.move;
         var deltaValue = stateTransition.move.stateAfterMove.delta;
         //TODO: Check the values here
+        //PROBLEM!!!
         var row = 0; //deltaValue.row;
         var col = 1; //deltaValue.col;
         var expectedMove = createMove(stateBeforeMove, row, col, turnIndexBeforeMove);
