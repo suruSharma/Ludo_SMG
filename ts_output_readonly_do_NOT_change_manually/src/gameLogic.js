@@ -4,12 +4,7 @@ var gameLogic;
     gameLogic.ROWS = 15;
     gameLogic.COLS = 15;
     gameLogic.NUMPLAYERS = 4;
-    var playerCount = {
-        'R': 4,
-        'B': 4,
-        'G': 4,
-        'Y': 4
-    };
+    var previousClick;
     function setIntialPlayerConfiguration() {
         var initPlayerState = [];
         var redPlayer = { pawnsOnBoard: 4, color: 'R', position: [] };
@@ -286,6 +281,41 @@ var gameLogic;
         }
         return '';
     }
+    function getColor(player) {
+        if (player == 0) {
+            return 'RP';
+        }
+        else if (player == 1) {
+            return 'BP';
+        }
+        else if (player == 2) {
+            return 'YP';
+        }
+        else if (player == 3) {
+            return 'GP';
+        }
+    }
+    function checkPreviousCLick(row, col, turnIndexBeforeMove, board) {
+        //1: Check if the cell clicked is a pawn 
+        //2: Check if the player and the pawn color is the same
+        var valueInBoard = board[row][col];
+        return valueInBoard == getColor(turnIndexBeforeMove);
+    }
+    //TODO : handle the scenario when the player lands on a star
+    function getNextPlayer(turnIndexBeforeMove) {
+        if (turnIndexBeforeMove == 0) {
+            return 1;
+        }
+        else if (turnIndexBeforeMove == 1) {
+            return 2;
+        }
+        else if (turnIndexBeforeMove == 2) {
+            return 3;
+        }
+        else if (turnIndexBeforeMove == 3) {
+            return 0;
+        }
+    }
     /**
      * Returns the move that should be performed when player
      * with index turnIndexBeforeMove makes a move in cell row X col.
@@ -296,31 +326,43 @@ var gameLogic;
         }
         var board = stateBeforeMove.board;
         var boardDelta = stateBeforeMove.delta;
-        if (board[row][col] !== '') {
-            throw new Error("One can only make a move in an empty position!");
-        }
         if (getWinner(boardDelta) !== '' || isTie(board)) {
             throw new Error("Can only make a move if the game is not over!");
         }
-        var boardAfterMove = angular.copy(board);
-        boardAfterMove[row][col] = turnIndexBeforeMove === 0 ? 'X' : 'O';
-        //TODO : create board delta after move and pass it to the getWinner method
-        var winner = getWinner(boardDelta); //to be changed. 
-        var endMatchScores;
         var turnIndexAfterMove;
-        if (winner !== '' || isTie(boardAfterMove)) {
-            // Game over.
-            turnIndexAfterMove = -1;
-            endMatchScores = winner === 'X' ? [1, 0] : winner === 'O' ? [0, 1] : [0, 0];
+        var pawnClicked;
+        if (!previousClick) {
+            var validClick = checkPreviousCLick(row, col, turnIndexBeforeMove, board);
+            turnIndexAfterMove = turnIndexBeforeMove;
+            previousClick = null;
+            pawnClicked = { row: row, col: col };
+            return null;
         }
         else {
-            // Game continues. Now it's the opponent's turn (the turn switches from 0 to 1 and 1 to 0).
-            turnIndexAfterMove = 1 - turnIndexBeforeMove;
-            endMatchScores = null;
+            if (board[row][col] !== '') {
+                throw new Error("One can only make a move in an empty position!");
+            }
+            var boardAfterMove = angular.copy(board);
+            boardAfterMove[row][col] = ''; //Set the original row column to empty. Will need to add additional checks here
+            //TODO: Update after the final row column has been calculated.
+            //boardAfterMove[row][col]
+            //TODO : create board delta after move and pass it to the getWinner method
+            var winner = getWinner(boardDelta); //to be changed. 
+            var endMatchScores = void 0;
+            if (winner !== '' || isTie(boardAfterMove)) {
+                // Game over.
+                turnIndexAfterMove = -1;
+                endMatchScores = winner === 'X' ? [1, 0] : winner === 'O' ? [0, 1] : [0, 0];
+            }
+            else {
+                // Game continues. Now it's the opponent's turn (the turn switches from 0 to 1 and 1 to 0).
+                turnIndexAfterMove = getNextPlayer(turnIndexBeforeMove);
+                endMatchScores = null;
+            }
+            var delta = { players: [] }; //TODO : create/add players array
+            var stateAfterMove = { delta: delta, board: boardAfterMove };
+            return { endMatchScores: endMatchScores, turnIndexAfterMove: turnIndexAfterMove, stateAfterMove: stateAfterMove };
         }
-        var delta = { players: [] }; //TODO : create/add players array
-        var stateAfterMove = { delta: delta, board: boardAfterMove };
-        return { endMatchScores: endMatchScores, turnIndexAfterMove: turnIndexAfterMove, stateAfterMove: stateAfterMove };
     }
     gameLogic.createMove = createMove;
     function checkMoveOk(stateTransition) {

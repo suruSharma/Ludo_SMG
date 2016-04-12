@@ -23,12 +23,7 @@ module gameLogic {
   export const ROWS = 15;
   export const COLS = 15;
   export const NUMPLAYERS = 4;
-  var playerCount={
-        'R' : 4,
-        'B' : 4,
-        'G' : 4,
-        'Y' : 4 
-};
+  var previousClick:IMove;
 
   function setIntialPlayerConfiguration(): BoardDelta{
       let initPlayerState : Player[] = [];
@@ -262,6 +257,37 @@ module gameLogic {
       }
       return '';
   }
+  
+  function getColor(player:number):string{
+      if(player == 0){
+          return 'RP';
+      }else if(player == 1){
+          return 'BP';
+      }else if(player == 2){
+          return 'YP'
+      }else if(player == 3){
+          return 'GP'
+      }
+  }
+  function checkPreviousCLick(row:number, col : number, turnIndexBeforeMove: number,board:Board): boolean{
+      //1: Check if the cell clicked is a pawn 
+      //2: Check if the player and the pawn color is the same
+      let valueInBoard = board[row][col];
+      return valueInBoard == getColor(turnIndexBeforeMove);      
+  }
+  
+  //TODO : handle the scenario when the player lands on a star
+  function getNextPlayer(turnIndexBeforeMove:number):number {
+      if(turnIndexBeforeMove == 0){
+          return 1;
+      }else if(turnIndexBeforeMove == 1){
+          return 2;
+      }else if(turnIndexBeforeMove == 2){
+          return 3;
+      }else if(turnIndexBeforeMove == 3){
+          return 0;
+      }
+  }
 
   /**
    * Returns the move that should be performed when player
@@ -270,34 +296,49 @@ module gameLogic {
   export function createMove(
       stateBeforeMove: IState, row: number, col: number, turnIndexBeforeMove: number): IMove {
     if (!stateBeforeMove) { // stateBeforeMove is null in a new match.
-      stateBeforeMove = getInitialState();
+        stateBeforeMove = getInitialState();
     }
     let board: Board = stateBeforeMove.board;
     let boardDelta : BoardDelta = stateBeforeMove.delta;
-    if (board[row][col] !== '') {
-      throw new Error("One can only make a move in an empty position!");
-    }
     if (getWinner(boardDelta) !== '' || isTie(board)) {
       throw new Error("Can only make a move if the game is not over!");
     }
-    let boardAfterMove = angular.copy(board);
-    boardAfterMove[row][col] = turnIndexBeforeMove === 0 ? 'X' : 'O';
-    //TODO : create board delta after move and pass it to the getWinner method
-    let winner = getWinner(boardDelta);//to be changed. 
-    let endMatchScores: number[];
     let turnIndexAfterMove: number;
-    if (winner !== '' || isTie(boardAfterMove)) {
-      // Game over.
-      turnIndexAfterMove = -1;
-      endMatchScores = winner === 'X' ? [1, 0] : winner === 'O' ? [0, 1] : [0, 0];
-    } else {
-      // Game continues. Now it's the opponent's turn (the turn switches from 0 to 1 and 1 to 0).
-      turnIndexAfterMove = 1 - turnIndexBeforeMove;
-      endMatchScores = null;
+    let pawnClicked : Cell;
+    if(!previousClick){//Saving the information of the first click
+        let validClick = checkPreviousCLick(row, col, turnIndexBeforeMove,board);
+        turnIndexAfterMove = turnIndexBeforeMove;
+        previousClick = null;
+        pawnClicked = {row:row, col:col};
+        return null;
+    }else{
+        if (board[row][col] !== '') {
+            throw new Error("One can only make a move in an empty position!");
+        }
+    
+        let boardAfterMove = angular.copy(board);
+        
+        boardAfterMove[row][col] = '';//Set the original row column to empty. Will need to add additional checks here
+        //TODO: Update after the final row column has been calculated.
+        //boardAfterMove[row][col]
+        //TODO : create board delta after move and pass it to the getWinner method
+        let winner = getWinner(boardDelta);//to be changed. 
+        let endMatchScores: number[];
+        
+        if (winner !== '' || isTie(boardAfterMove)) {
+        // Game over.
+        turnIndexAfterMove = -1;
+        endMatchScores = winner === 'X' ? [1, 0] : winner === 'O' ? [0, 1] : [0, 0];
+        } else {
+        // Game continues. Now it's the opponent's turn (the turn switches from 0 to 1 and 1 to 0).
+        turnIndexAfterMove = getNextPlayer(turnIndexBeforeMove);
+        endMatchScores = null;
+        }
+        let delta: BoardDelta = {players : []};//TODO : create/add players array
+        let stateAfterMove: IState = {delta: delta, board: boardAfterMove};
+        return {endMatchScores: endMatchScores, turnIndexAfterMove: turnIndexAfterMove, stateAfterMove: stateAfterMove};
     }
-    let delta: BoardDelta = {players : []};//TODO : create/add players array
-    let stateAfterMove: IState = {delta: delta, board: boardAfterMove};
-    return {endMatchScores: endMatchScores, turnIndexAfterMove: turnIndexAfterMove, stateAfterMove: stateAfterMove};
+    
   }
 
   export function checkMoveOk(stateTransition: IStateTransition): void {
