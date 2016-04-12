@@ -14,7 +14,20 @@ module game {
   export let state: IState = null;
   export let isHelpModalShown: boolean = false;
   export let diceValue : number;
-
+  
+  var RedPath  = [[6,1], [6,2], [6,3], [6,4], [6,5], [5, 6], [4, 6], [3, 6], [2, 6], [1, 6], [0, 6], [0, 7], [0, 8], [1, 8], [2, 8], [3, 8], [4, 8], [5, 8], [6, 9], [6, 10], [6, 11], [6, 12], [6, 13], [6, 14], [7, 14], [8, 14], [8, 13], [8, 12], [8, 11], [8, 10], [8, 9], [9, 8], [10, 8], [11, 8], [12, 8], [13, 8], [14, 8], [14, 7], [14 ,6], [13 ,6], [12 ,6], [11 ,6], [10 ,6], [9 ,6], [8, 5], [8, 4], [8, 3], [8, 2], [8, 1], [8, 0], [7, 0], [7, 1], [7, 2], [7, 3], [7, 4], [7, 5], [7, 6]];
+  
+  var BluePath  = [[1, 8], [2, 8], [3, 8], [4, 8], [5, 8], [6, 9], [6, 10], [6, 11], [6, 12], [6, 13], [6, 14], [7, 14], [8, 14], [8, 13], [8, 12], [8, 11], [8, 10], [8, 9], [9, 8], [10, 8], [11, 8], [12, 8], [13, 8], [14, 8], [14, 7], [14 ,6], [13 ,6], [12 ,6], [11 ,6], [10 ,6], [9 ,6], [8, 5], [8, 4], [8, 3], [8, 2], [8, 1], [8, 0], [7, 0], [6, 0], [6,1], [6,2], [6,3], [6,4], [6,5], [5, 6], [4, 6], [3, 6], [2, 6], [1, 6], [0, 6], [0, 7], [1, 7], [2, 7], [3, 7], [4, 7], [5, 7], [6, 7]];
+  
+  
+  var YellowPath  = [[8, 13], [8, 12], [8, 11], [8, 10], [8, 9], [9, 8], [10, 8], [11, 8], [12, 8], [13, 8], [14, 8], [14, 7], [14 ,6], [13 ,6], [12 ,6], [11 ,6], [10 ,6], [9 ,6], [8, 5], [8, 4], [8, 3], [8, 2], [8, 1], [8, 0], [7, 0], [6, 0], [6,1], [6,2], [6,3], [6,4], [6,5], [5, 6], [4, 6], [3, 6], [2, 6], [1, 6], [0, 6], [0, 7], [0, 8], [1, 8], [2, 8], [3, 8], [4, 8], [5, 8], [6, 9], [6, 10], [6, 11], [6, 12], [6, 13], [6, 14], [7, 14], [7, 13], [7,12], [7, 11], [7, 10], [7, 9], [7, 8]];
+  
+  
+  var GreenPath  = [[13 ,6], [12 ,6], [11 ,6], [10 ,6], [9 ,6], [8, 5], [8, 4], [8, 3], [8, 2], [8, 1], [8, 0], [7, 0], [6, 0], [6,1], [6,2], [6,3], [6,4], [6,5], [5, 6], [4, 6], [3, 6], [2, 6], [1, 6], [0, 6], [0, 7], [0, 8], [1, 8], [2, 8], [3, 8], [4, 8], [5, 8], [6, 9], [6, 10], [6, 11], [6, 12], [6, 13], [6, 14], [7, 14], [8, 14], [8, 13], [8, 12], [8, 11], [8, 10], [8, 9], [9, 8], [10, 8], [11, 8], [12, 8], [13, 8], [14, 8], [14, 7], [13, 7], [12, 7], [11, 7], [10, 7], [9, 7], [8, 7], ];
+  
+  var dieValue : number = 0; 
+  
+ 
   export function init() {
     translate.setTranslations(getTranslations());
     translate.setLanguage('en');
@@ -119,6 +132,7 @@ module game {
     status.innerHTML = "You rolled "+diceTotal+".";
     diceValue = d1;
     //button.disabled=true;
+    dieValue = diceTotal;    
     }
     
   export function cellClicked(row: number, col: number): void {
@@ -139,6 +153,63 @@ module game {
       return;
     }
   }
+  
+  export function destinationCell(initRow: number, initCol : number, colorofPlayer: string) {
+      
+      var initArrPos = 0
+      let endCellPos :Cell = {row: 0, col : 0}
+      if(colorofPlayer == 'R'){
+      for(var z=0;z<RedPath.length;z++)
+      {
+          if((RedPath[z][0] == initRow) && (RedPath[z][1] == initCol))
+          {
+              initArrPos = z;
+          }
+      }
+      var finalArrPos = initArrPos + dieValue;
+      endCellPos = {row: RedPath[finalArrPos][0], col : RedPath[finalArrPos][1]}
+      }
+     else if(colorofPlayer == 'B'){
+      for(var z=0;z<BluePath.length;z++)
+      {
+          if((BluePath[z][0] == initRow) && (BluePath[z][1] == initCol))
+          {
+              initArrPos = z;
+          }
+      }
+      var finalArrPos = initArrPos + dieValue;
+      endCellPos = {row: BluePath[finalArrPos][0], col : BluePath[finalArrPos][1]}
+      }
+            
+      else if(colorofPlayer == 'Y'){
+      for(var z=0;z<YellowPath.length;z++)
+      {
+          if((YellowPath[z][0] == initRow) && (YellowPath[z][1] == initCol))
+          {
+              initArrPos = z;
+          }
+      }
+      var finalArrPos = initArrPos + dieValue;
+      endCellPos = {row: YellowPath[finalArrPos][0], col : YellowPath[finalArrPos][1]}
+      }
+      else if(colorofPlayer == 'G'){
+      for(var z=0;z<GreenPath.length;z++)
+      {
+          if((GreenPath[z][0] == initRow) && (GreenPath[z][1] == initCol))
+          {
+              initArrPos = z;
+          }
+      }
+      var finalArrPos = initArrPos + dieValue;
+      endCellPos = {row: GreenPath[finalArrPos][0], col : GreenPath[finalArrPos][1]}
+      }
+      else{
+           log.info("Incorrect Player color sent. send only R B G Y");
+      }
+      return endCellPos;
+ 
+  }
+ 
 
   export function shouldShowImage(row: number, col: number): boolean {
     let cell = state.board[row][col];
