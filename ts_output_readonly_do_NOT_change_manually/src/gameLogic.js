@@ -331,18 +331,24 @@ var gameLogic;
         }
         var turnIndexAfterMove;
         var pawnClicked;
+        var boardAfterMove = angular.copy(board);
         if (!previousClick) {
+            var delta = { players: [] }; //TODO : create/add players array
+            var stateAfterMove = { delta: delta, board: boardAfterMove };
             var validClick = checkPreviousCLick(row, col, turnIndexBeforeMove, board);
-            turnIndexAfterMove = turnIndexBeforeMove;
-            previousClick = null;
-            pawnClicked = { row: row, col: col };
-            return null;
+            if (!validClick) {
+                return { endMatchScores: null, turnIndexAfterMove: turnIndexBeforeMove, stateAfterMove: stateAfterMove, errorCode: 1, canMove: true };
+            }
+            else {
+                pawnClicked = { row: row, col: col };
+                return { endMatchScores: null, turnIndexAfterMove: turnIndexBeforeMove, stateAfterMove: stateAfterMove, errorCode: -1, canMove: true };
+            }
         }
         else {
+            previousClick = null;
             if (board[row][col] !== '') {
                 throw new Error("One can only make a move in an empty position!");
             }
-            var boardAfterMove = angular.copy(board);
             boardAfterMove[row][col] = ''; //Set the original row column to empty. Will need to add additional checks here
             //TODO: Update after the final row column has been calculated.
             //boardAfterMove[row][col]
@@ -361,7 +367,7 @@ var gameLogic;
             }
             var delta = { players: [] }; //TODO : create/add players array
             var stateAfterMove = { delta: delta, board: boardAfterMove };
-            return { endMatchScores: endMatchScores, turnIndexAfterMove: turnIndexAfterMove, stateAfterMove: stateAfterMove };
+            return { endMatchScores: endMatchScores, turnIndexAfterMove: turnIndexAfterMove, stateAfterMove: stateAfterMove, errorCode: -1, canMove: false };
         }
     }
     gameLogic.createMove = createMove;

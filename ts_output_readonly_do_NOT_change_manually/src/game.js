@@ -97,19 +97,15 @@ var game;
         }
     }
     function rollDice() {
-        log.info("Hello");
         var die1 = document.getElementById("die1");
-        var die2 = document.getElementById("die2");
         var status = document.getElementById("status");
+        var button = document.getElementById("rollDice");
         var d1 = Math.floor(Math.random() * 6) + 1;
-        var d2 = Math.floor(Math.random() * 6) + 1;
-        var diceTotal = d1 + d2;
-        die1.innerHTML = d1;
-        die2.innerHTML = d2;
+        var diceTotal = d1;
+        die1.innerHTML = diceTotal + '';
         status.innerHTML = "You rolled " + diceTotal + ".";
-        if (d1 == d2) {
-            status.innerHTML += " DOUBLES! You get a free turn!!";
-        }
+        game.diceValue = d1;
+        //button.disabled=true;
     }
     game.rollDice = rollDice;
     function cellClicked(row, col) {
@@ -122,7 +118,7 @@ var game;
         }
         try {
             var nextMove = gameLogic.createMove(game.state, row, col, game.move.turnIndexAfterMove);
-            game.canMakeMove = false; // to prevent making another move
+            game.canMakeMove = nextMove.canMove;
             moveService.makeMove(nextMove);
         }
         catch (e) {

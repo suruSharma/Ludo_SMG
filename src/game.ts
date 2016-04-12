@@ -13,6 +13,7 @@ module game {
   export let move: IMove = null;
   export let state: IState = null;
   export let isHelpModalShown: boolean = false;
+  export let diceValue : number;
 
   export function init() {
     translate.setTranslations(getTranslations());
@@ -109,19 +110,15 @@ module game {
   }
 
   export function rollDice() {
-    log.info("Hello");
     var die1 = document.getElementById("die1");
-    var die2 = document.getElementById("die2");
     var status = document.getElementById("status");
+    var button = <HTMLInputElement>document.getElementById("rollDice");
     var d1 = Math.floor(Math.random() * 6) + 1;
-    var d2 = Math.floor(Math.random() * 6) + 1;
-    var diceTotal = d1 + d2;
-    die1.innerHTML = d1;
-    die2.innerHTML = d2;
+    var diceTotal = d1;
+    die1.innerHTML = diceTotal+'';
     status.innerHTML = "You rolled "+diceTotal+".";
-    if(d1 == d2){
-        status.innerHTML += " DOUBLES! You get a free turn!!";
-    }
+    diceValue = d1;
+    //button.disabled=true;
     }
     
   export function cellClicked(row: number, col: number): void {
@@ -135,7 +132,7 @@ module game {
     try {
       let nextMove = gameLogic.createMove(
           state, row, col, move.turnIndexAfterMove);
-      canMakeMove = false; // to prevent making another move
+      canMakeMove = nextMove.canMove;
       moveService.makeMove(nextMove);
     } catch (e) {
       log.info(["Cell is already full in position:", row, col]);
