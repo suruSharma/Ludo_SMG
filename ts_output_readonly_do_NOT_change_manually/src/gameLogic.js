@@ -5,6 +5,11 @@ var gameLogic;
     gameLogic.COLS = 15;
     gameLogic.NUMPLAYERS = 4;
     var previousClick;
+    var diceValue;
+    var RedPath = [[6, 1], [6, 2], [6, 3], [6, 4], [6, 5], [5, 6], [4, 6], [3, 6], [2, 6], [1, 6], [0, 6], [0, 7], [0, 8], [1, 8], [2, 8], [3, 8], [4, 8], [5, 8], [6, 9], [6, 10], [6, 11], [6, 12], [6, 13], [6, 14], [7, 14], [8, 14], [8, 13], [8, 12], [8, 11], [8, 10], [8, 9], [9, 8], [10, 8], [11, 8], [12, 8], [13, 8], [14, 8], [14, 7], [14, 6], [13, 6], [12, 6], [11, 6], [10, 6], [9, 6], [8, 5], [8, 4], [8, 3], [8, 2], [8, 1], [8, 0], [7, 0], [7, 1], [7, 2], [7, 3], [7, 4], [7, 5], [7, 6]];
+    var BluePath = [[1, 8], [2, 8], [3, 8], [4, 8], [5, 8], [6, 9], [6, 10], [6, 11], [6, 12], [6, 13], [6, 14], [7, 14], [8, 14], [8, 13], [8, 12], [8, 11], [8, 10], [8, 9], [9, 8], [10, 8], [11, 8], [12, 8], [13, 8], [14, 8], [14, 7], [14, 6], [13, 6], [12, 6], [11, 6], [10, 6], [9, 6], [8, 5], [8, 4], [8, 3], [8, 2], [8, 1], [8, 0], [7, 0], [6, 0], [6, 1], [6, 2], [6, 3], [6, 4], [6, 5], [5, 6], [4, 6], [3, 6], [2, 6], [1, 6], [0, 6], [0, 7], [1, 7], [2, 7], [3, 7], [4, 7], [5, 7], [6, 7]];
+    var YellowPath = [[8, 13], [8, 12], [8, 11], [8, 10], [8, 9], [9, 8], [10, 8], [11, 8], [12, 8], [13, 8], [14, 8], [14, 7], [14, 6], [13, 6], [12, 6], [11, 6], [10, 6], [9, 6], [8, 5], [8, 4], [8, 3], [8, 2], [8, 1], [8, 0], [7, 0], [6, 0], [6, 1], [6, 2], [6, 3], [6, 4], [6, 5], [5, 6], [4, 6], [3, 6], [2, 6], [1, 6], [0, 6], [0, 7], [0, 8], [1, 8], [2, 8], [3, 8], [4, 8], [5, 8], [6, 9], [6, 10], [6, 11], [6, 12], [6, 13], [6, 14], [7, 14], [7, 13], [7, 12], [7, 11], [7, 10], [7, 9], [7, 8]];
+    var GreenPath = [[13, 6], [12, 6], [11, 6], [10, 6], [9, 6], [8, 5], [8, 4], [8, 3], [8, 2], [8, 1], [8, 0], [7, 0], [6, 0], [6, 1], [6, 2], [6, 3], [6, 4], [6, 5], [5, 6], [4, 6], [3, 6], [2, 6], [1, 6], [0, 6], [0, 7], [0, 8], [1, 8], [2, 8], [3, 8], [4, 8], [5, 8], [6, 9], [6, 10], [6, 11], [6, 12], [6, 13], [6, 14], [7, 14], [8, 14], [8, 13], [8, 12], [8, 11], [8, 10], [8, 9], [9, 8], [10, 8], [11, 8], [12, 8], [13, 8], [14, 8], [14, 7], [13, 7], [12, 7], [11, 7], [10, 7], [9, 7], [8, 7],];
     function getIntialPositions(player) {
         var cells = [];
         if (player === 'R') {
@@ -323,6 +328,20 @@ var gameLogic;
             return 'GP';
         }
     }
+    function getStringValueOfPlayer(player) {
+        if (player == 0) {
+            return 'R';
+        }
+        else if (player == 1) {
+            return 'B';
+        }
+        else if (player == 2) {
+            return 'Y';
+        }
+        else if (player == 3) {
+            return 'G';
+        }
+    }
     function checkPreviousCLick(row, col, turnIndexBeforeMove, board) {
         //1: Check if the cell clicked is a pawn 
         //2: Check if the player and the pawn color is the same
@@ -390,6 +409,50 @@ var gameLogic;
             return [0, 0, 0, 1];
         }
     }
+    function getDestinationCell(initRow, initCol, colorofPlayer) {
+        var initArrPos = 0;
+        var endCellPos = { row: 0, col: 0 };
+        if (colorofPlayer == 'R') {
+            for (var z = 0; z < RedPath.length; z++) {
+                if ((RedPath[z][0] == initRow) && (RedPath[z][1] == initCol)) {
+                    initArrPos = z;
+                }
+            }
+            var finalArrPos = initArrPos + diceValue;
+            endCellPos = { row: RedPath[finalArrPos][0], col: RedPath[finalArrPos][1] };
+        }
+        else if (colorofPlayer == 'B') {
+            for (var z = 0; z < BluePath.length; z++) {
+                if ((BluePath[z][0] == initRow) && (BluePath[z][1] == initCol)) {
+                    initArrPos = z;
+                }
+            }
+            var finalArrPos = initArrPos + diceValue;
+            endCellPos = { row: BluePath[finalArrPos][0], col: BluePath[finalArrPos][1] };
+        }
+        else if (colorofPlayer == 'Y') {
+            for (var z = 0; z < YellowPath.length; z++) {
+                if ((YellowPath[z][0] == initRow) && (YellowPath[z][1] == initCol)) {
+                    initArrPos = z;
+                }
+            }
+            var finalArrPos = initArrPos + diceValue;
+            endCellPos = { row: YellowPath[finalArrPos][0], col: YellowPath[finalArrPos][1] };
+        }
+        else if (colorofPlayer == 'G') {
+            for (var z = 0; z < GreenPath.length; z++) {
+                if ((GreenPath[z][0] == initRow) && (GreenPath[z][1] == initCol)) {
+                    initArrPos = z;
+                }
+            }
+            var finalArrPos = initArrPos + diceValue;
+            endCellPos = { row: GreenPath[finalArrPos][0], col: GreenPath[finalArrPos][1] };
+        }
+        else {
+            log.info("Incorrect Player color sent. send only R B G Y");
+        }
+        return endCellPos;
+    }
     function getPawnIndex(player, row, col) {
         for (var i = 0; i < 4; i++) {
             if (player.position[i].row == row && player.position[i].col === col) {
@@ -417,6 +480,11 @@ var gameLogic;
         //TODO : update the pawn count here
         return boardDelta;
     }
+    function getDiceValue() {
+        diceValue = Math.floor(Math.random() * 6) + 1;
+        return diceValue;
+    }
+    gameLogic.getDiceValue = getDiceValue;
     /**
      * Returns the move that should be performed when player
      * with index turnIndexBeforeMove makes a move in cell row X col.
@@ -436,7 +504,7 @@ var gameLogic;
         var boardAfterMove = angular.copy(board);
         //Set the value of the source
         boardAfterMove[row][col] = getValueForSourceCell(board, row, col);
-        var desitnation = { row: 6, col: 2 };
+        var desitnation = getDestinationCell(row, col, getStringValueOfPlayer(turnIndexBeforeMove));
         //Set the value of the desitnation cell
         boardAfterMove[desitnation.row][desitnation.col] = getValueForDestinationCell(board, desitnation.row, desitnation.col, turnIndexBeforeMove);
         //TODO : update board delta here
