@@ -107,7 +107,7 @@ module gameLogic {
             }else if(j == 7){
                 board[i][j] = 'BL';
             }else if(j == 8){
-                board[i][j] = 'BS';
+                board[i][j] = 'BC';
             }else if(j == 9|| j == 14){
                 board[i][j] = 'BB'
             }else{
@@ -122,7 +122,7 @@ module gameLogic {
                 board[i][j] = 'RP'
             }else if(j == 6){
                 if(i == 2){
-                    board[i][j] = 'S';    
+                    board[i][j] = '';    
                 }else if(i == 3){
                     board[i][j] = '';
                 }
@@ -160,13 +160,13 @@ module gameLogic {
       
       if( i == 6){
           if( j == 1){
-              board[i][j] = 'RS';
+              board[i][j] = 'RC';
           }else if( j == 6 || j == 8){
               board[i][j] = 'B';
           }else if(j == 7){
               board[i][j] = 'BH';
           }else if(j == 12){
-              board[i][j] = 'S'
+              board[i][j] = ''
           }else{
               board[i][j] = '';
           }
@@ -190,13 +190,13 @@ module gameLogic {
       
       if( i == 8){
           if( j == 2){
-              board[i][j] = 'S';
+              board[i][j] = '';
           }else if(j == 6 || j == 8){
               board[i][j] = 'B';
           }else if(j == 7){
               board[i][j] = 'GH';
           }else if(j == 13){
-              board[i][j] = 'YS'
+              board[i][j] = 'YC'
           }else{
               board[i][j] = ''
           }
@@ -244,7 +244,7 @@ module gameLogic {
             }else if(j == 7){
                 board[i][j] = 'GL';
             }else if(j == 8){
-                board[i][j] = 'S';
+                board[i][j] = '';
             }else if(j == 11 || j == 12){
                 board[i][j] = 'YP'
             }else if(j == 9 || j == 14){
@@ -258,7 +258,7 @@ module gameLogic {
           if(j == 0 || j == 5){
               board[i][j] = 'GB';
           }else if(j == 6){
-                board[i][j] = 'GS';
+                board[i][j] = 'GC';
             }else if(j == 7){
                 board[i][j] = 'GL';
             }else if(j == 8){
@@ -394,7 +394,7 @@ module gameLogic {
               initArrPos = z;
           }
       }
-      var finalArrPos = initArrPos + diceValue;
+      var finalArrPos = initArrPos + diceValue-1;
       endCellPos = {row: RedPath[finalArrPos][0], col : RedPath[finalArrPos][1]}
       }
      else if(colorofPlayer == 'B'){
@@ -405,7 +405,7 @@ module gameLogic {
               initArrPos = z;
           }
       }
-      var finalArrPos = initArrPos + diceValue;
+      var finalArrPos = initArrPos + diceValue-1;
       endCellPos = {row: BluePath[finalArrPos][0], col : BluePath[finalArrPos][1]}
       }
             
@@ -417,7 +417,7 @@ module gameLogic {
               initArrPos = z;
           }
       }
-      var finalArrPos = initArrPos + diceValue;
+      var finalArrPos = initArrPos + diceValue-1;
       endCellPos = {row: YellowPath[finalArrPos][0], col : YellowPath[finalArrPos][1]}
       }
       else if(colorofPlayer == 'G'){
@@ -428,7 +428,7 @@ module gameLogic {
               initArrPos = z;
           }
       }
-      var finalArrPos = initArrPos + diceValue;
+      var finalArrPos = initArrPos + diceValue-1;
       endCellPos = {row: GreenPath[finalArrPos][0], col : GreenPath[finalArrPos][1]}
       }
       else{

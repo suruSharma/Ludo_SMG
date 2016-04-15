@@ -187,11 +187,6 @@ var game;
         return game.state.board[row][col] === 'YL';
     }
     game.isPieceYellowLane = isPieceYellowLane;
-    //Plain star
-    function isPiecePlainStar(row, col) {
-        return game.state.board[row][col] === 'S';
-    }
-    game.isPiecePlainStar = isPiecePlainStar;
     function isPieceRedPlayer(row, col) {
         return game.state.board[row][col] === 'RP';
     }

@@ -203,11 +203,6 @@ module game {
     return state.board[row][col] === 'YL';
   }
   
-  //Plain star
-  export function isPiecePlainStar(row: number, col: number): boolean {
-    return state.board[row][col] === 'S';
-  }
-  
   export function isPieceRedPlayer(row: number, col: number): boolean {
     return state.board[row][col] === 'RP';
   }
