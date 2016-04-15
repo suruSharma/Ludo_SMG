@@ -1,6 +1,7 @@
 type Board = string[][];
 interface BoardDelta {
   players: Player[];
+  dirtyCell : Cell;
 }
 interface IState {
   board: Board;
@@ -65,7 +66,7 @@ module gameLogic {
       initPlayerState.push(bluePlayer);
       initPlayerState.push(yellowPlayer);
       initPlayerState.push(greenPlayer);
-      let delta: BoardDelta = {players : initPlayerState};
+      let delta: BoardDelta = {players : initPlayerState, dirtyCell:null};
       return delta;
   }
   
@@ -379,6 +380,8 @@ function getDeltaAfterMove(boardDelta : BoardDelta , turnIndexBeforeMove : numbe
         player.position[index] = {row:destinationRow, col:destinationCol};
     }
     boardDelta.players[turnIndexBeforeMove] = player;
+    let sourceCell : Cell = {row:sourceRow, col:sourceCol};
+    boardDelta.dirtyCell = sourceCell;
     //TODO : update the pawn count here
     return boardDelta;
 }
@@ -393,9 +396,9 @@ function getDeltaAfterMove(boardDelta : BoardDelta , turnIndexBeforeMove : numbe
     }
     let board: Board = stateBeforeMove.board;
     let boardDelta : BoardDelta = stateBeforeMove.delta;
-    if (board[row][col] === '' || board[row][col] === 'X') {
-      throw new Error("One can only select a pawn to move");
-    }
+    //if (board[row][col] !== '') {
+    //  throw new Error("One can only select a pawn to move");
+    //}
     if (getWinner(boardDelta) !== '' || isTie(board)) {
       throw new Error("Can only make a move if the game is not over!");
     }
@@ -434,8 +437,9 @@ function getDeltaAfterMove(boardDelta : BoardDelta , turnIndexBeforeMove : numbe
     //TODO: Check the values here
     
     //PROBLEM!!!
-    let row = 0;//deltaValue.row;
-    let col = 1;//deltaValue.col;
+    let dirtyCell : Cell = deltaValue.dirtyCell;
+    let row = dirtyCell.row;
+    let col = dirtyCell.col
     let expectedMove = createMove(stateBeforeMove, row, col, turnIndexBeforeMove);
     if (!angular.equals(move, expectedMove)) {
       throw new Error("Expected move=" + angular.toJson(expectedMove, true) +

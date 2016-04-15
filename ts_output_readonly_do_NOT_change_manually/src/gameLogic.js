@@ -43,7 +43,7 @@ var gameLogic;
         initPlayerState.push(bluePlayer);
         initPlayerState.push(yellowPlayer);
         initPlayerState.push(greenPlayer);
-        var delta = { players: initPlayerState };
+        var delta = { players: initPlayerState, dirtyCell: null };
         return delta;
     }
     /** Returns the initial Ludo board, which is a ROWSxCOLS matrix containing ''. */
@@ -412,6 +412,8 @@ var gameLogic;
             player.position[index] = { row: destinationRow, col: destinationCol };
         }
         boardDelta.players[turnIndexBeforeMove] = player;
+        var sourceCell = { row: sourceRow, col: sourceCol };
+        boardDelta.dirtyCell = sourceCell;
         //TODO : update the pawn count here
         return boardDelta;
     }
@@ -425,9 +427,9 @@ var gameLogic;
         }
         var board = stateBeforeMove.board;
         var boardDelta = stateBeforeMove.delta;
-        if (board[row][col] === '' || board[row][col] === 'X') {
-            throw new Error("One can only select a pawn to move");
-        }
+        //if (board[row][col] !== '') {
+        //  throw new Error("One can only select a pawn to move");
+        //}
         if (getWinner(boardDelta) !== '' || isTie(board)) {
             throw new Error("Can only make a move if the game is not over!");
         }
@@ -465,8 +467,9 @@ var gameLogic;
         var deltaValue = stateTransition.move.stateAfterMove.delta;
         //TODO: Check the values here
         //PROBLEM!!!
-        var row = 0; //deltaValue.row;
-        var col = 1; //deltaValue.col;
+        var dirtyCell = deltaValue.dirtyCell;
+        var row = dirtyCell.row;
+        var col = dirtyCell.col;
         var expectedMove = createMove(stateBeforeMove, row, col, turnIndexBeforeMove);
         if (!angular.equals(move, expectedMove)) {
             throw new Error("Expected move=" + angular.toJson(expectedMove, true) +
