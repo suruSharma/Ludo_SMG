@@ -152,7 +152,7 @@ var gameLogic;
                         board[i][j] = 'RC';
                     }
                     else if (j == 6 || j == 8) {
-                        board[i][j] = 'B';
+                        board[i][j] = 'BLACK';
                     }
                     else if (j == 7) {
                         board[i][j] = 'BH';
@@ -172,7 +172,7 @@ var gameLogic;
                         board[i][j] = 'RH';
                     }
                     else if (j == 7) {
-                        board[i][j] = 'B';
+                        board[i][j] = 'BLACK';
                     }
                     else if (j == 8) {
                         board[i][j] = 'YH';
@@ -189,7 +189,7 @@ var gameLogic;
                         board[i][j] = '';
                     }
                     else if (j == 6 || j == 8) {
-                        board[i][j] = 'B';
+                        board[i][j] = 'BLACK';
                     }
                     else if (j == 7) {
                         board[i][j] = 'GH';

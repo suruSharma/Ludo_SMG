@@ -223,7 +223,7 @@ var game;
     }
     game.isPieceYellowBorder = isPieceYellowBorder;
     function isPieceBlack(row, col) {
-        return game.state.board[row][col] === 'B';
+        return game.state.board[row][col] === 'BLACK';
     }
     game.isPieceBlack = isPieceBlack;
     //Set color of cells

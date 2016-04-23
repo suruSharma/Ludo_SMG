@@ -162,7 +162,7 @@ module gameLogic {
           if( j == 1){
               board[i][j] = 'RC';
           }else if( j == 6 || j == 8){
-              board[i][j] = 'B';
+              board[i][j] = 'BLACK';
           }else if(j == 7){
               board[i][j] = 'BH';
           }else if(j == 12){
@@ -178,7 +178,7 @@ module gameLogic {
           }else if(j == 6){
               board[i][j] = 'RH';
           }else if(j == 7){
-              board[i][j] = 'B';
+              board[i][j] = 'BLACK';
           }else if(j == 8){
               board[i][j] = 'YH';
           }else if( j == 9 || j == 10 || j == 11 || j == 12 || j ==13){
@@ -192,7 +192,7 @@ module gameLogic {
           if( j == 2){
               board[i][j] = '';
           }else if(j == 6 || j == 8){
-              board[i][j] = 'B';
+              board[i][j] = 'BLACK';
           }else if(j == 7){
               board[i][j] = 'GH';
           }else if(j == 13){

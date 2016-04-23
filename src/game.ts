@@ -235,7 +235,7 @@ module game {
     return state.board[row][col] === 'YB';
   }
   export function isPieceBlack(row: number, col: number): boolean {
-    return state.board[row][col] === 'B';
+    return state.board[row][col] === 'BLACK';
   }
   
   //Set color of cells
