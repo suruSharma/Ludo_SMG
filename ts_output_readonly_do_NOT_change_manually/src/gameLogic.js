@@ -215,7 +215,12 @@ var gameLogic;
                         board[i][j] = 'YB';
                     }
                     else {
-                        board[i][j] = 'X';
+                        if (i == 9) {
+                            board[i][j] = 'X';
+                        }
+                        if (i == 14) {
+                            board[i][j] = '';
+                        }
                     }
                 }
                 if (i == 10 || i == 11) {

@@ -212,7 +212,14 @@ module gameLogic {
             }else  if( j >=9 && j <=14){
               board[i][j] = 'YB'
           }else{
-                board[i][j] = 'X';
+                if( i == 9){
+                    board[i][j] = 'X';    
+                }
+                
+                if( i == 14){
+                    board[i][j] = '';
+                }
+                
             }
       }
       

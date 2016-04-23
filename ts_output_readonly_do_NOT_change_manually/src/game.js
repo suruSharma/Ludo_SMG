@@ -115,10 +115,12 @@ var game;
         if (!game.canMakeMove) {
             return;
         }
+        var nextMove = null;
         try {
-            var nextMove = gameLogic.createMove(game.state, row, col, game.move.turnIndexAfterMove);
+            var nextMove_1 = gameLogic.createMove(game.state, row, col, game.move.turnIndexAfterMove);
+            // Move is legal, make it!
             game.canMakeMove = false;
-            moveService.makeMove(nextMove);
+            moveService.makeMove(nextMove_1);
         }
         catch (e) {
             log.info(["Cell is already full in position:", row, col]);
