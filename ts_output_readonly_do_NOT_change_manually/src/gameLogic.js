@@ -48,7 +48,7 @@ var gameLogic;
         initPlayerState.push(bluePlayer);
         initPlayerState.push(yellowPlayer);
         initPlayerState.push(greenPlayer);
-        var delta = { players: initPlayerState, dirtyCell: null };
+        var delta = { players: initPlayerState, row: null, col: null };
         return delta;
     }
     /** Returns the initial Ludo board, which is a ROWSxCOLS matrix containing ''. */
@@ -481,7 +481,8 @@ var gameLogic;
         }
         boardDelta.players[turnIndexBeforeMove] = player;
         var sourceCell = { row: sourceRow, col: sourceCol };
-        boardDelta.dirtyCell = sourceCell;
+        boardDelta.row = sourceRow;
+        boardDelta.col = sourceCol;
         //TODO : update the pawn count here
         return boardDelta;
     }
@@ -514,6 +515,7 @@ var gameLogic;
         boardAfterMove[desitnation.row][desitnation.col] = getValueForDestinationCell(board, desitnation.row, desitnation.col, turnIndexBeforeMove);
         //TODO : update board delta here
         var winner = getWinner(boardDelta);
+        var boardDeltaCopy = angular.copy(boardDelta);
         var endMatchScores;
         var turnIndexAfterMove;
         if (winner !== '' || isTie(boardAfterMove)) {
@@ -526,7 +528,7 @@ var gameLogic;
             turnIndexAfterMove = getNextPlayer(turnIndexBeforeMove);
             endMatchScores = null;
         }
-        var delta = getDeltaAfterMove(boardDelta, turnIndexBeforeMove, row, col, desitnation.row, desitnation.col);
+        var delta = getDeltaAfterMove(boardDeltaCopy, turnIndexBeforeMove, row, col, desitnation.row, desitnation.col);
         var stateAfterMove = { delta: delta, board: boardAfterMove };
         return { endMatchScores: endMatchScores, turnIndexAfterMove: turnIndexAfterMove, stateAfterMove: stateAfterMove };
     }
@@ -540,9 +542,9 @@ var gameLogic;
         var deltaValue = stateTransition.move.stateAfterMove.delta;
         //TODO: Check the values here
         //PROBLEM!!!
-        var dirtyCell = deltaValue.dirtyCell;
-        var row = dirtyCell.row;
-        var col = dirtyCell.col;
+        //let dirtyCell : Cell = deltaValue.dirtyCell;
+        var row = deltaValue.row;
+        var col = deltaValue.col;
         var expectedMove = createMove(stateBeforeMove, row, col, turnIndexBeforeMove);
         if (!angular.equals(move, expectedMove)) {
             throw new Error("Expected move=" + angular.toJson(expectedMove, true) +

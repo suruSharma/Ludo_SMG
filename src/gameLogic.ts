@@ -1,7 +1,8 @@
 type Board = string[][];
 interface BoardDelta {
   players: Player[];
-  dirtyCell : Cell;
+  row:number;
+  col:number;
 }
 interface IState {
   board: Board;
@@ -77,7 +78,7 @@ module gameLogic {
       initPlayerState.push(bluePlayer);
       initPlayerState.push(yellowPlayer);
       initPlayerState.push(greenPlayer);
-      let delta: BoardDelta = {players : initPlayerState, dirtyCell:null};
+      let delta: BoardDelta = {players : initPlayerState, row:null,col:null};
       return delta;
   }
   
@@ -468,7 +469,8 @@ function getDeltaAfterMove(boardDelta : BoardDelta , turnIndexBeforeMove : numbe
     }
     boardDelta.players[turnIndexBeforeMove] = player;
     let sourceCell : Cell = {row:sourceRow, col:sourceCol};
-    boardDelta.dirtyCell = sourceCell;
+    boardDelta.row = sourceRow;
+    boardDelta.col = sourceCol;
     //TODO : update the pawn count here
     return boardDelta;
 }
@@ -501,6 +503,7 @@ function getDeltaAfterMove(boardDelta : BoardDelta , turnIndexBeforeMove : numbe
     boardAfterMove[desitnation.row][desitnation.col] = getValueForDestinationCell(board, desitnation.row, desitnation.col, turnIndexBeforeMove);
     //TODO : update board delta here
     let winner = getWinner(boardDelta);
+    let boardDeltaCopy = angular.copy(boardDelta);
     let endMatchScores: number[];
     let turnIndexAfterMove: number;
     if (winner !== '' || isTie(boardAfterMove)) {
@@ -512,7 +515,7 @@ function getDeltaAfterMove(boardDelta : BoardDelta , turnIndexBeforeMove : numbe
       turnIndexAfterMove = getNextPlayer(turnIndexBeforeMove);
       endMatchScores = null;
     }
-    let delta: BoardDelta = getDeltaAfterMove(boardDelta, turnIndexBeforeMove, row,col, desitnation.row, desitnation.col);
+    let delta: BoardDelta = getDeltaAfterMove(boardDeltaCopy, turnIndexBeforeMove, row,col, desitnation.row, desitnation.col);
     let stateAfterMove: IState = {delta: delta, board: boardAfterMove};
     return {endMatchScores: endMatchScores, turnIndexAfterMove: turnIndexAfterMove, stateAfterMove: stateAfterMove};
     
@@ -528,9 +531,9 @@ function getDeltaAfterMove(boardDelta : BoardDelta , turnIndexBeforeMove : numbe
     //TODO: Check the values here
     
     //PROBLEM!!!
-    let dirtyCell : Cell = deltaValue.dirtyCell;
-    let row = dirtyCell.row;
-    let col = dirtyCell.col
+    //let dirtyCell : Cell = deltaValue.dirtyCell;
+    let row = deltaValue.row;
+    let col = deltaValue.col
     let expectedMove = createMove(stateBeforeMove, row, col, turnIndexBeforeMove);
     if (!angular.equals(move, expectedMove)) {
       throw new Error("Expected move=" + angular.toJson(expectedMove, true) +

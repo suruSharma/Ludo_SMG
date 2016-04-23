@@ -132,15 +132,15 @@ module game {
     }
     let nextMove: IMove = null;
     try {
-      let nextMove = gameLogic.createMove(
+      nextMove = gameLogic.createMove(
           state, row, col, move.turnIndexAfterMove);
-      // Move is legal, make it!
-      canMakeMove = false;
-      moveService.makeMove(nextMove);
     } catch (e) {
       log.info(["Cell is already full in position:", row, col]);
       return;
     }
+    // Move is legal, make it!
+    canMakeMove = false; // to prevent making another move
+    moveService.makeMove(nextMove);
     
   }
  
