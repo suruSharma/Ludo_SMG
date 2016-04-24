@@ -54,12 +54,12 @@ module gameLogic {
           cells.push({row:2, col:12});
           cells.push({row:3,col:11});
           cells.push({row:3,col:12});
-      }else if(player === 'Y'){
+      }else if(player === 'G'){
           cells.push({row:11,col:2});
           cells.push({row:11, col:3});
           cells.push({row:12,col:2});
           cells.push({row:12,col:3});
-      }else if(player === 'G'){
+      }else if(player === 'Y'){
           cells.push({row:11,col:11});
           cells.push({row:11, col:12});
           cells.push({row:12,col:11});
@@ -360,20 +360,35 @@ module gameLogic {
           return 'YC';
       }else if(board[row][col] == 'GP'){
           return 'GC';
-      }else{
+      }else if(board[row][col] == 'R' ||board[row][col] == 'B'||board[row][col] == 'Y'||board[row][col] == 'G' ){
+          return '';
+      }
+      else{
           return board[row][col];
       }
   }
   
   function getValueForDestinationCell(board: string[][], row:number, col: number, turnIndexBeforeMove: number):string{
       if(turnIndexBeforeMove == 0){
-          return 'R';
+          if(board[row][col] == 'RC' || board[row][col] == 'RL'){
+              return 'RP';
+          }
+          return 'R';  
       }else if(turnIndexBeforeMove == 1){
-          return 'B';
+          if(board[row][col] == 'BC' || board[row][col] == 'BL'){
+              return 'BP';
+          }
+          return 'B'; 
       }else if(turnIndexBeforeMove == 2){
-          return 'Y';
+          if(board[row][col] == 'YC' || board[row][col] == 'YL'){
+              return 'YP';
+          }
+          return 'Y'; 
       }else if(turnIndexBeforeMove == 3){
-          return 'G';
+          if(board[row][col] == 'GC' || board[row][col] == 'GL'){
+              return 'GP';
+          }
+          return 'G'; 
       }
   }
   
@@ -390,11 +405,14 @@ module gameLogic {
       }
   }
   
-  function getDestinationCell(initRow: number, initCol : number, colorofPlayer: string) {
+  function getDestinationCell(initRow: number, initCol : number, colorofPlayer: string, initMove:boolean) {
       
-      var initArrPos = 0
+      let initArrPos = 0
       let endCellPos :Cell = {row: 0, col : 0}
       if(colorofPlayer == 'R'){
+      if(initMove){
+          return {row: RedPath[0][0], col : RedPath[0][1]}
+      }
       for(var z=0;z<RedPath.length;z++)
       {
           if((RedPath[z][0] == initRow) && (RedPath[z][1] == initCol))
@@ -402,10 +420,13 @@ module gameLogic {
               initArrPos = z;
           }
       }
-      var finalArrPos = initArrPos + diceValue-1;
+      var finalArrPos = initArrPos + diceValue;
       endCellPos = {row: RedPath[finalArrPos][0], col : RedPath[finalArrPos][1]}
       }
      else if(colorofPlayer == 'B'){
+         if(initMove){
+          return {row: BluePath[0][0], col : BluePath[0][1]}
+      }
       for(var z=0;z<BluePath.length;z++)
       {
           if((BluePath[z][0] == initRow) && (BluePath[z][1] == initCol))
@@ -413,11 +434,14 @@ module gameLogic {
               initArrPos = z;
           }
       }
-      var finalArrPos = initArrPos + diceValue-1;
+      var finalArrPos = initArrPos + diceValue;
       endCellPos = {row: BluePath[finalArrPos][0], col : BluePath[finalArrPos][1]}
       }
             
       else if(colorofPlayer == 'Y'){
+          if(initMove){
+          return {row: YellowPath[0][0], col : YellowPath[0][1]}
+      }
       for(var z=0;z<YellowPath.length;z++)
       {
           if((YellowPath[z][0] == initRow) && (YellowPath[z][1] == initCol))
@@ -425,10 +449,13 @@ module gameLogic {
               initArrPos = z;
           }
       }
-      var finalArrPos = initArrPos + diceValue-1;
+      var finalArrPos = initArrPos + diceValue;
       endCellPos = {row: YellowPath[finalArrPos][0], col : YellowPath[finalArrPos][1]}
       }
       else if(colorofPlayer == 'G'){
+          if(initMove){
+          return {row: GreenPath[0][0], col : GreenPath[0][1]}
+      }
       for(var z=0;z<GreenPath.length;z++)
       {
           if((GreenPath[z][0] == initRow) && (GreenPath[z][1] == initCol))
@@ -436,7 +463,7 @@ module gameLogic {
               initArrPos = z;
           }
       }
-      var finalArrPos = initArrPos + diceValue-1;
+      var finalArrPos = initArrPos + diceValue;
       endCellPos = {row: GreenPath[finalArrPos][0], col : GreenPath[finalArrPos][1]}
       }
       else{
@@ -474,6 +501,23 @@ function getDeltaAfterMove(boardDelta : BoardDelta , turnIndexBeforeMove : numbe
     //TODO : update the pawn count here
     return boardDelta;
 }
+
+
+function isPawnInCell(boardDelta : BoardDelta, row:number, col:number, playerId: number){
+        let player : Player = boardDelta.players[playerId];
+        if(playerId === 0){
+            return (row === 2 && col === 2) || (row === 2 && col === 3) || (row === 3 && col === 2) || (row === 3 && col === 3); 
+        }else if(playerId === 1){
+            return (row === 2 && col === 11) || (row === 2 && col === 12) || (row === 3 && col === 11) || (row === 3 && col === 12);
+        }else if(playerId === 2){
+            return (row === 11 && col === 11) || (row === 11 && col === 12) || (row === 12 && col === 11) || (row === 12 && col === 12);
+        }else if(playerId === 3){
+            return (row === 11 && col === 2) || (row === 11 && col === 3) || (row === 12 && col === 2) || (row === 12 && col === 3);
+        }
+        return false;
+}
+
+
   export function getDiceValue():number {
     diceValue = Math.floor(Math.random() * 6) + 1;
     return diceValue;
@@ -495,30 +539,80 @@ function getDeltaAfterMove(boardDelta : BoardDelta , turnIndexBeforeMove : numbe
     if (getWinner(boardDelta) !== '' || isTie(board)) {
       throw new Error("Can only make a move if the game is not over!");
     }
-    let boardAfterMove = angular.copy(board);
-    //Set the value of the source
-    boardAfterMove[row][col] = getValueForSourceCell(board, row, col);
-    let desitnation : Cell = getDestinationCell(row,col,getStringValueOfPlayer(turnIndexBeforeMove));
-    //Set the value of the desitnation cell
-    boardAfterMove[desitnation.row][desitnation.col] = getValueForDestinationCell(board, desitnation.row, desitnation.col, turnIndexBeforeMove);
-    //TODO : update board delta here
-    let winner = getWinner(boardDelta);
-    let boardDeltaCopy = angular.copy(boardDelta);
-    let endMatchScores: number[];
-    let turnIndexAfterMove: number;
-    if (winner !== '' || isTie(boardAfterMove)) {
-      // Game over.
-      turnIndexAfterMove = -1;
-      endMatchScores = getEndMatchScores(winner);
-    } else {
-      //TODO: here, check for killed pawn, star destination
-      turnIndexAfterMove = getNextPlayer(turnIndexBeforeMove);
-      endMatchScores = null;
-    }
-    let delta: BoardDelta = getDeltaAfterMove(boardDeltaCopy, turnIndexBeforeMove, row,col, desitnation.row, desitnation.col);
-    let stateAfterMove: IState = {delta: delta, board: boardAfterMove};
-    return {endMatchScores: endMatchScores, turnIndexAfterMove: turnIndexAfterMove, stateAfterMove: stateAfterMove};
     
+    let pawnInCell : boolean = isPawnInCell(boardDelta, row, col, turnIndexBeforeMove);
+    if(pawnInCell && !(diceValue === 6 || diceValue === 4)){
+       let boardAfterMove = angular.copy(board);
+       //In this case the board does not get updated. Only the turnIndexAfterMove does. Everything else remains the same
+        //TODO : update board delta here
+        let winner = getWinner(boardDelta);
+        let endMatchScores: number[];
+        let turnIndexAfterMove: number;
+        if (winner !== '') {
+        // Game over.
+        turnIndexAfterMove = -1;
+        endMatchScores = getEndMatchScores(winner);
+        } else {
+        //TODO: here, check for killed pawn, star destination
+        turnIndexAfterMove =  getNextPlayer(turnIndexBeforeMove);
+        endMatchScores = null;
+        }
+        let boardDeltaCopy = angular.copy(boardDelta);
+        boardDeltaCopy.row = row;
+        boardDeltaCopy.col = col;
+        let stateAfterMove: IState = {delta: boardDeltaCopy, board: board};
+        return {endMatchScores: endMatchScores, turnIndexAfterMove: turnIndexAfterMove, stateAfterMove: stateAfterMove};
+    }
+    
+    if(pawnInCell && (diceValue === 6 || diceValue === 4)){
+        let boardAfterMove = angular.copy(board);
+        //Set the value of the source
+        boardAfterMove[row][col] = getValueForSourceCell(board, row, col);
+        let desitnation : Cell = getDestinationCell(row,col,getStringValueOfPlayer(turnIndexBeforeMove), true);
+        //Set the value of the desitnation cell
+        boardAfterMove[desitnation.row][desitnation.col] = getValueForDestinationCell(board, desitnation.row, desitnation.col, turnIndexBeforeMove);
+        //TODO : update board delta here
+        let winner = getWinner(boardDelta);
+        let boardDeltaCopy = angular.copy(boardDelta);
+        let endMatchScores: number[];
+        let turnIndexAfterMove: number;
+        if (winner !== '') {
+        // Game over.
+        turnIndexAfterMove = -1;
+        endMatchScores = getEndMatchScores(winner);
+        } else {
+        //TODO: here, check for killed pawn, star destination
+        turnIndexAfterMove = turnIndexBeforeMove;
+        endMatchScores = null;
+        }
+        let delta: BoardDelta = getDeltaAfterMove(boardDeltaCopy, turnIndexBeforeMove, row,col, desitnation.row, desitnation.col);
+        let stateAfterMove: IState = {delta: delta, board: boardAfterMove};
+        return {endMatchScores: endMatchScores, turnIndexAfterMove: turnIndexAfterMove, stateAfterMove: stateAfterMove};
+    }else{
+        let boardAfterMove = angular.copy(board);
+        //Set the value of the source
+        boardAfterMove[row][col] = getValueForSourceCell(board, row, col);
+        let desitnation : Cell = getDestinationCell(row,col,getStringValueOfPlayer(turnIndexBeforeMove),false);
+        //Set the value of the desitnation cell
+        boardAfterMove[desitnation.row][desitnation.col] = getValueForDestinationCell(board, desitnation.row, desitnation.col, turnIndexBeforeMove);
+        //TODO : update board delta here
+        let winner = getWinner(boardDelta);
+        let boardDeltaCopy = angular.copy(boardDelta);
+        let endMatchScores: number[];
+        let turnIndexAfterMove: number;
+        if (winner !== '') {
+        // Game over.
+        turnIndexAfterMove = -1;
+        endMatchScores = getEndMatchScores(winner);
+        } else {
+        //TODO: here, check for killed pawn, star destination
+        turnIndexAfterMove = getNextPlayer(turnIndexBeforeMove);
+        endMatchScores = null;
+        }
+        let delta: BoardDelta = getDeltaAfterMove(boardDeltaCopy, turnIndexBeforeMove, row,col, desitnation.row, desitnation.col);
+        let stateAfterMove: IState = {delta: delta, board: boardAfterMove};
+        return {endMatchScores: endMatchScores, turnIndexAfterMove: turnIndexAfterMove, stateAfterMove: stateAfterMove};
+    }
   }
 
   export function checkMoveOk(stateTransition: IStateTransition): void {
