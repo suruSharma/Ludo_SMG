@@ -1,13 +1,18 @@
 describe("In TicTacToe", function () {
     var OK = true;
     var ILLEGAL = false;
-    var X_TURN = 0;
-    var O_TURN = 1;
+    var R_TURN = 0;
+    var B_TURN = 1;
+    var Y_TURN = 2;
+    var G_TURN = 3;
     var NO_ONE_TURN = -1;
     var NO_ONE_WINS = null;
-    var X_WIN_SCORES = [1, 0];
-    var O_WIN_SCORES = [0, 1];
-    var TIE_SCORES = [0, 0];
+    var R_WIN_SCORES = [1, 0, 0, 0];
+    var B_WIN_SCORES = [0, 1, 0, 0];
+    var Y_WIN_SCORES = [0, 0, 1, 0];
+    var G_WIN_SCORES = [0, 0, 0, 1];
+    //let TIE_SCORES = [0, 0];
+    // create new expect move!
     function expectMove(isOk, turnIndexBeforeMove, boardBeforeMove, row, col, boardAfterMove, turnIndexAfterMove, endMatchScores) {
         var stateTransition = {
             turnIndexBeforeMove: turnIndexBeforeMove,
@@ -36,6 +41,7 @@ describe("In TicTacToe", function () {
             }
         }
     }
+    //change the board variables and all
     it("placing X in 0x0 from initial state is legal", function () {
         expectMove(OK, X_TURN, null, 0, 0, [['X', '', ''],
             ['', '', ''],

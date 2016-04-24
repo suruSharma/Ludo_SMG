@@ -1,0 +1,7 @@
+1. Overlapping pawns of the same user
+
+    If a pawn of a user is present on a certain location, and another pawn of the same user reaches the same location - how do we display it?
+    
+2. Killing off pawns of other colors - Pending
+
+3. 
