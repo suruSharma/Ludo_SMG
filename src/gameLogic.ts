@@ -378,22 +378,22 @@ module gameLogic {
   
   function getValueForDestinationCell(board: string[][], row:number, col: number, turnIndexBeforeMove: number):string{
       if(turnIndexBeforeMove == 0){
-          if(board[row][col] == 'RC' || board[row][col] == 'RL'){
+          if(board[row][col] === 'RC' || board[row][col] === 'RL' || board[row][col] === 'RP'){
               return 'RP';
           }
           return 'R';  
       }else if(turnIndexBeforeMove == 1){
-          if(board[row][col] == 'BC' || board[row][col] == 'BL'){
+          if(board[row][col] === 'BC' || board[row][col] === 'BL' || board[row][col] === 'BP'){
               return 'BP';
           }
           return 'B'; 
       }else if(turnIndexBeforeMove == 2){
-          if(board[row][col] == 'YC' || board[row][col] == 'YL'){
+          if(board[row][col] === 'YC' || board[row][col] === 'YL' || board[row][col] === 'YP'){
               return 'YP';
           }
           return 'Y'; 
       }else if(turnIndexBeforeMove == 3){
-          if(board[row][col] == 'GC' || board[row][col] == 'GL'){
+          if(board[row][col] === 'GC' || board[row][col] === 'GL' || board[row][col] === 'GP'){
               return 'GP';
           }
           return 'G'; 
