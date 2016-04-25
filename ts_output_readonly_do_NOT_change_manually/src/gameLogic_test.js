@@ -29,6 +29,22 @@ describe("In TicTacToe", function () {
         ["GB", "X", "X", "X", "X", "GB", "GC", "GL", "", "YB", "X", "X", "X", "X", "YB"],
         ["GB", "GB", "GB", "GB", "GB", "GB", "", "", "", "YB", "YB", "YB", "YB", "YB", "YB",],
     ];
+    var turnRintiBoard = [["RB", "RB", "RB", "RB", "RB", "RB", "", "", "", "BB", "BB", "BB", "BB", "BB", "BB",],
+        ["RB", "X", "X", "X", "X", "RB", "", "BL", "BC", "BB", "X", "X", "X", "X", "BB"],
+        ["RB", "X", "RP", "RP", "X", "RB", "", "BL", "BC", "BB", "X", "RP", "RP", "X", "BB"],
+        ["RB", "X", "", "RP", "X", "RB", "", "BL", "BC", "BB", "X", "RP", "RP", "X", "BB"],
+        ["RB", "X", "X", "X", "X", "RB", "", "BL", "BC", "BB", "X", "X", "X", "X", "BB"],
+        ["RB", "RB", "RB", "RB", "RB", "RB", "", "BL", "", "BB", "BB", "BB", "BB", "BB", "BB",],
+        ["", "RP", "", "", "", "", "B", "BH", "B", "", "", "", "", "", "",],
+        ["", "RL", "RL", "RL", "RL", "RL", "RH", "B", "YH", "YL", "YL", "YL", "YL", "YL", ""],
+        ["", "", "", "", "", "", "B", "GH", "B", "", "", "", "", "YC", "",],
+        ["GB", "GB", "GB", "GB", "GB", "GB", "", "GL", "", "YB", "YB", "YB", "YB", "YB", "YB",],
+        ["GB", "X", "X", "X", "X", "GB", "", "GL", "", "YB", "X", "X", "X", "X", "YB"],
+        ["GB", "X", "GP", "GP", "X", "GB", "", "GL", "", "YB", "X", "YP", "YP", "X", "YB"],
+        ["GB", "X", "GP", "GP", "X", "GB", "", "GL", "", "YB", "X", "YP", "YP", "X", "YB"],
+        ["GB", "X", "X", "X", "X", "GB", "GC", "GL", "", "YB", "X", "X", "X", "X", "YB"],
+        ["GB", "GB", "GB", "GB", "GB", "GB", "", "", "", "YB", "YB", "YB", "YB", "YB", "YB",],
+    ];
     //
     //let TIE_SCORES = [0, 0];
     // create new expect move!
@@ -60,6 +76,9 @@ describe("In TicTacToe", function () {
             }
         }
     }
+    it("placing R in the initial position is legal", function () {
+        expectMove(OK, R_TURN, null, 6, 1, turnRintiBoard, B_TURN, NO_ONE_WINS);
+    });
     //change the board variables and all
     //   it("placing X in 0x0 from initial state is legal", function() {
     //     expectMove(OK, X_TURN, null, 0, 0,

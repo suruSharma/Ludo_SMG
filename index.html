@@ -11,14 +11,14 @@
 
   <!-- To ensure CSS files are downloaded in parallel, always include external CSS before external JavaScript. -->
   <!-- build:[href] css/everything.min.css -->
-  <link rel="stylesheet" type="text/css" href="css/game.css">
+  <!--<link rel="stylesheet" type="text/css" href="css/game.css"> -->
   <!-- /build -->
   <link crossorigin="anonymous" rel="stylesheet" type="text/css" href="http://yoav-zibin.github.io/emulator/main.css">
 
   <!-- build:[href] http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css -->
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <!-- /build -->
-
+  <link rel="stylesheet" type="text/css" href="css/game.css">
   <!-- The crossorigin attribute controls, for scripts that are obtained from other origins, whether error information will be exposed. -->
   <!-- build:[src] http://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js -->
   <script crossorigin="anonymous" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.js"></script>
@@ -283,12 +283,13 @@
               </div>
         </div>
   </div>
-</div>
-<div class="modal-footer">
+  <div class="modal-footer">
     <div id="die1" class="dice">0</div>
     <button type="button" id = "rollDice" class="btn btn-primary" ng-click="game.rollDice()">Roll Dice</button>
     <h2 id="status" style="clear:left;"></h2>
+    </div>
 </div>
+
 
 
 
