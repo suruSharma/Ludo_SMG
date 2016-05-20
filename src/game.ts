@@ -52,11 +52,16 @@ module game {
         iw: "חוקי המשחק",
       },
       RULES_SLIDE1: {
-        en: "TODO : Update these rules",
+        en: "Red Starts of the game. Roll the dice, if it is 4 or 6 then click on one of the red players. Roll the dice again and move the new player by the number that popped up in the dice.",
         iw: "",
       },
       RULES_SLIDE2: {
-        en: "TODO : Update these rules",
+        en: "The order is Red, blue, yellow, green.",
+        iw: "",
+      },
+      
+      RULES_SLIDE3: {
+        en: "Once all the color's players are in the home, the player wins. ",
         iw: "",
       },
       CLOSE:  {
