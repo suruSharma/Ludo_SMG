@@ -86,12 +86,12 @@ describe("In TicTacToe", function() {
     }
   }
   
-  it("placing R in the initial position is legal", function(){
+//   it("placing R in the initial position is legal", function(){
       
-      expectMove(OK, R_TURN, null, 6, 1,
-      turnRintiBoard, B_TURN, NO_ONE_WINS );
+//       expectMove(OK, R_TURN, null, 6, 1,
+//       turnRintiBoard, B_TURN, NO_ONE_WINS );
       
-  }  );
+//   }  );
 //change the board variables and all
 
 //   it("placing X in 0x0 from initial state is legal", function() {
